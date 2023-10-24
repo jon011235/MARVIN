@@ -4,8 +4,7 @@
     "customizations": {
         "vscode": {
             "extensions": [
-                "veriloghdl.vhdl",
-                "verilog-linter",
+                "tzylee.verilog-highlight",
                 "ms-vscode.cpptools",
                 "GitHub.copilot"
             ],
