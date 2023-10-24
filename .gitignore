@@ -1,0 +1,38 @@
+# General
+*
+!*/
+!*.txt
+# VHDL
+!*.v
+!*.vhdl
+!*.vhd
+# Quartus
+!*.qpf
+!*.qsf
+!*.sdc
+!*.srf
+# Qsys
+!*.qsys
+!*.qip
+!*.bsf
+# Modelsim
+!*.mpf
+!*.vqm
+!*.qrf
+!*.do
+!*.tcl
+# Doc
+!*.tex
+!*.md
+!Doxyfile
+# Scripts
+!*.sh
+# Folders
+*.main-doxygen/
+*.creative-doxygen/
+*.material/
+*.notes/
+*.resources/
+*.tasks/
+*.git/
+*.vscode/
