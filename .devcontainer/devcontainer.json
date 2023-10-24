@@ -1,0 +1,24 @@
+{
+    // Name this configuration
+    "name": "Codespace for verilog development",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "veriloghdl.vhdl",
+                "verilog-linter",
+                "ms-vscode.cpptools",
+                "GitHub.copilot"
+            ],
+            "runArgs": [
+                "--privileged"
+            ],
+            "postCreateCommand": "apt-get update && apt-get install -y icarus-verilog gtkwave && echo 'export PATH=$PATH:/usr/local/bin' >> /root/.bashrc",
+            "settings": {
+                "workbench.colorTheme": "Default Dark+",
+                "files.associations": {
+                    "*.v": "verilog"
+                }
+            }
+        }
+    }
+}
