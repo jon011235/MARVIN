@@ -1,4 +1,4 @@
-name: Verilog Build and Analysis
+name: "Verilog Build and Analysis"
 
 on:
   [pull_request]
