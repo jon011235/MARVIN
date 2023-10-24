@@ -3,7 +3,8 @@
 !*/
 !*.txt
 # VHDL
-!*.v
+# IMPORTANT! Use .sv for SystemVerilog 2006 Standard instead of .v for Verliog 2001 standard. (.v intentionally removed)
+!*.sv
 !*.vhdl
 !*.vhd
 # Quartus
