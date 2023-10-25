@@ -1,30 +1,28 @@
 # General
-*
-!*/
-!*.txt
+  *
+  !*/
+  !*.txt
 # VHDL
-# IMPORTANT! Use .sv for SystemVerilog 2006 Standard instead of .v for Verliog 2001 standard. (.v intentionally removed)
-!*.sv
-!*.vhdl
-!*.vhd
+  !*.sv         # Note: .sv for SystemVerilog 2006 Standard instead of .v for Verliog 2001 standard
+  !*.vhdl
+  !*.vhd
 # Quartus
-!*.qpf
-!*.qsf
-!*.sdc
-!*.srf
-# Qsys
-!*.qsys
-!*.qip
-!*.bsf
+  !*.qpf
+  !*.qsf
+  !*.sdc
+  !*.srf
+# Platform Designer (Qsys)
+  !*.qsys
+  !*.qip
+  !*.bsf
 # Modelsim
-!*.mpf
-!*.vqm
-!*.qrf
-!*.do
-!*.tcl
+  !*.mpf
+  !*.vqm
+  !*.qrf
+  !*.do
+  !*.tcl
 # Doc
-!*.tex
-!*.md
-!Doxyfile
-# Scripts
-!*.sh
+  !*.tex
+  !*.md
+# Folders
+  *.vscode/
