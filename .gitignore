@@ -3,7 +3,7 @@
 !*/
 !*.txt
 # VHDL
-!*.v
+!*.sv
 !*.vhdl
 !*.vhd
 # Quartus
