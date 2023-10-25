@@ -3,7 +3,7 @@
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 Register Name       |   Index       |   Description
-----------------+---------------+----------------------------------------------------------------------------------
+--------------------+---------------+----------------------------------------------------------------------------------
 DO                  |   0x01        |   store the output of functions like ADD, SUB, AND, OR
 CP                  |   0x02        |   store the current pixel color (0000 rrrr gggg bbbb)
 DX                  |   0x03        |   a register for holding data that needs to be acessed fast by any opperation
