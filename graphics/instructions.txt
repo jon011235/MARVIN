@@ -1,0 +1,82 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!! THIS INSTRUCTION SET IS NOT FINAL! !!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+Register Name       |   Index       |   Description
+----------------+---------------+----------------------------------------------------------------------------------
+DO                  |   0x01        |   store the output of functions like ADD, SUB, AND, OR
+CP                  |   0x02        |   store the current pixel color (0000 rrrr gggg bbbb)
+DX                  |   0x03        |   a register for holding data that needs to be acessed fast by any opperation
+SP                  |   0x04        |   store a pointer to an shader program, if it points to 0x00, draw black
+DS                  |   0x05        |   store a pointer to the start of the data that should be drawn
+DA                  |   0x06        |   store the amount of data that should be drawn
+TS                  |   0x07        |   store the size of an triangle in bits or the radius of a circle
+PX                  |   0x08        |   store the current pixels x position
+PY                  |   0x09        |   store the current pixels y position
+
+Function            |   Opcode      |   Description
+--------------------+---------------+------------------------------------------------------------------------------
+END                 |   0x00        |   say that a program ended
+MOV  $addr $reg     |   0x01        |   move the specified register to the specified address
+ADD  $addr $addr    |   0x02        |   add the data stored at the two addresses
+SUB  $addr $addr    |   0x03        |   subtract the data at the two addresses
+MUL  $addr $addr    |   0x04        |   multiply the data at the two addresses
+DIV  $addr $addr    |   0x05        |   divide the data at the two addresses
+AND  $addr $addr    |   0x06        |   logicaly and the data at the two addresses
+NAND $addr $addr    |   0x07        |   logicaly and the data at the two addresses and invert the output
+OR   $addr $addr    |   0x08        |   logicaly or the data at the two addresses
+XOR  $addr $addr    |   0x09        |   logicaly exclusivly or the data at the two addresses
+NOR  $addr $addr    |   0x0A        |   logicaly or the data at the two addresses and invert the output
+NOT  $addr          |   0x0B        |   logicaly invert the data at the inputed address
+JIZ  $reg  $addr    |   0x0C        |   jump to the address if the inputed value is 0
+JIO  $reg  $addr    |   0x0D        |   jump to the address if the inputed value is 1
+LOD  $reg  $addr    |   0x0E        |   load the data from the specified address into the Register
+LTM  $addr $data    |   0x0F        |   load the specified data into the specified address
+LTR  $reg  $data    |   0x10        |   load the specified data into the specified register
+JMP  $addr          |   0x11        |   jump to the specified address
+DRAW $mode          |   0x12        |   start a draw call @param mode : the specified mode for the draw call
+                    |               |                                     0x00 : invalide, skip instruction
+                    |               |                                     0x01 : triangles
+                    |               |                                     0x02 : lines
+                    |               |                                     0x03 : points / circles
+FILL $reg           |   0x13        |   fill the current framebuffer with the color in the specified register
+MADD $addr $addr    |   0x14        |   add the 4x4 matrices stored at the two addresses
+MSUB $addr $addr    |   0x15        |   subtract the 4x4 matrices stored at the two addresses
+MMUL $addr $addr    |   0x16        |   multiply the 4x4 matrices stored at the two addresses
+MSCL $addr $addr    |   0x17        |   scale the 4x4 matrices stored at the two addresses
+SQU  $addr          |   0x18        |   square the data stored at the address
+SQRT $addr          |   0x19        |   take the square root of the data stored at the address
+EXP  $addr $addr    |   0x1A        |   HOCHRECHNUNG
+SIN  $addr          |   0x1B        |   calculate the sine of the number stored at the address in degrees
+COS  $addr          |   0x1C        |   calculate the cosine of the number stored at the address in degrees
+TAN  $addr          |   0x1D        |   calculate the tangents of the number stored at the address in degrees
+FLIP                |   0x1E        |   swap the back and front buffer
+
+Symbol              |   Description
+--------------------+----------------------------------------------------------------------------------------------
+;                   |   comment the rest of the line
+//                  |   comment the rest of the line
+#                   |   comment the rest of the line
+/*                  |   start a commented section over more than one line
+*/                  |   close a commented section over more than one line
+\                   |   use the ASCII code of the following character
+0x                  |   specifie the following string as hexadecimal
+0d                  |   specifie the following string as decimal
+0b                  |   specifie the following string as binary (default for 1 and 0)
+SPACE               |   specify the end of a parameter
+ENTER               |   specify the end of an command
+
+EXAMPLES
+  Draw a red screen:
+    LTR DX 0b111100000000   ; load the color red into the register DX
+    FILL DX                 ; fill the current draw buffer with the color in DX
+    FLIP                    ; flip the buffers
+
+  Draw a calculated background
+    MOV 0x01 PX             ; load the x position of the current pixel to the memory address 0x01 of video memory
+    MOV 0x02 PY             ; load the y position of the current pixel to the momory address 0x02 of video memory
+    ADD 0x01 0x02           ; add the data at the memory address 0x01 and 0x02
+    MOV 0x04 DO             ; move the data in the output register into 0x04
+    LTM 0x03 0b111111110000 ; load a bitmask into memory address 0x03
+    AND 0x03 0x04           ; logicaly and the data at the addresses 0x03 and 0x04
+    LTR PC DO               ; load the output of the AND function as the pixel color
