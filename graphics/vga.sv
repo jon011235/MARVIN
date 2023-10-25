@@ -37,7 +37,7 @@ module vga #(
         // input the CORRECT clock speed
         input clk,
         // reset the chip
-        input res,
+        input rst,
         // input the color for the pixel
         input [11 : 0] color,
 
