@@ -29,6 +29,7 @@ module toplevel_debug (
 );
 
 wire [15 : 0] pix_x;
+wire [15 : 0] pix_y;
 reg [15 : 0] col;
 
 vga #(
@@ -47,6 +48,7 @@ vga #(
     .color(col),
 
     .pix_x(pix_x),
+    .pix_y(pix_y),
 
     .vga_r(vga_r),
     .vga_g(vga_g),
@@ -55,7 +57,8 @@ vga #(
     .vga_vsync(vga_vsync)
 );
 
-assign col[7 : 0] = '0;
+assign col[3 : 0] = '0;
+assign col[7 : 4] = pix_y[3 : 0];
 assign col[11 : 8] = pix_x[3 : 0];
     
 endmodule
