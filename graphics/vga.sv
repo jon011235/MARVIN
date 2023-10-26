@@ -1,13 +1,10 @@
-//////////////////////////////////////////////////////////////////////
-// Project : MARVIN
-// Module  : vga
-// Description: draw an inputed varrying color to the screen
-// Refereced literature:
-// - http://tinyvga.com/vga-timing/640x480@60Hz
-//
-// Authors : Mattis Levin Hänsel
-//
-//////////////////////////////////////////////////////////////////////
+/*
+    Project:    MARVIN
+    Sector:     VGA
+    Entity:     vga
+    Summary:    output using vga protocoll
+    Authors:    DM8AT
+*/
 
 module vga #(
         // input information about the screen
