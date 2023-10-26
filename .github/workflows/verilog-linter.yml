@@ -1,14 +1,11 @@
-on: [pull_request]
-
+name: Verible linter example
+on:
+  pull_request:
 jobs:
-  clean-verilog:
+  lint:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2 # Checkout source
-    - uses: reviewdog/action-setup@v1 # Setup reviewdog
-    - uses: SuibianP/verilog-cleaner@v0.1.1 # lint and format
+    - uses: actions/checkout@master
+    - uses: chipsalliance/verible-linter-action@main
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-    - uses: peter-evans/create-pull-request@v3 # Creates pull request with formatting results
-      with:
-        delete-branch: true
