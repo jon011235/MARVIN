@@ -134,7 +134,7 @@ module vga #(
 
             // check if the vertical synchronisation should be active
             if ((c_pix_y > (HEIGHT+VERT_FPORCH)) && (c_pix_y < (HEIGHT+VERT_FPORCH+VERT_SYNC))) begin
-                // set the vertical sync to heigh
+                // set the vertical sync to 1
                 vga_vsync = 1;
             end
             else begin
@@ -144,7 +144,7 @@ module vga #(
 
             // check if the horizontal synchronisation should be active
             if ((c_pix_x > (WIDTH+HORI_FPORCH)) && (c_pix_x < (WIDTH+HORI_FPORCH+HORI_SYNC))) begin
-                // set the horizontal synchronisation to height
+                // set the horizontal synchronisation to 1
                 vga_hsync = 1;
             end
             else begin

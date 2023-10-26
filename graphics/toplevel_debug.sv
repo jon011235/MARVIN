@@ -10,7 +10,6 @@
 module toplevel_debug (
     // input for the 50 Hz clock
     input clk_50,
-    // input for a reset button
     input rst,
     // output for the vga signals
     //  output for the red amount
