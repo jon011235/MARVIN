@@ -6,7 +6,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2 # Checkout source
     - uses: reviewdog/action-setup@v1 # Setup reviewdog
-    - uses: SuibianP/verilog-cleaner@v1 # lint and format
+    - uses: SuibianP/verilog-cleaner@v0.1.1 # lint and format
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
     - uses: peter-evans/create-pull-request@v3 # Creates pull request with formatting results
