@@ -1,11 +1,10 @@
-//////////////////////////////////////////////////////////////////////
-// Project : MARVIN
-// Module  : toplevel_debug
-// Description: pass debug data to the FPGA
-//
-// Authors : Mattis Levin Hänsel
-//
-//////////////////////////////////////////////////////////////////////
+/*
+    Project:    MARVIN
+    Sector:     debuging
+    Entity:     toplevel_debug
+    Summary:    pass debug data to the FPGA
+    Authors:    DM8AT
+*/
 
 module toplevel_debug (
     // input for the 50 Hz clock

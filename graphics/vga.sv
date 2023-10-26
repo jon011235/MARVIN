@@ -2,7 +2,7 @@
     Project:    MARVIN
     Sector:     VGA
     Entity:     vga
-    Summary:    output using vga protocoll
+    Summary:    output using vga protocol
     Authors:    DM8AT
 */
 
