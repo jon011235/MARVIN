@@ -58,5 +58,8 @@ vga #(
 assign col[3 : 0] = '0;
 assign col[7 : 4] = pix_y[3 : 0];
 assign col[11 : 8] = pix_x[3 : 0];
-    
+
+assign leds[9:1] = '0;
+assign leds[0] = '1;
+
 endmodule

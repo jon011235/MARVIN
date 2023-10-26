@@ -60,9 +60,9 @@ module vga #(
     );
 
     // store the maximal length of an line
-    parameter [15 : 0] FULL_LINE = WIDTH + HORI_FPORCH + HORI_SYNC + HORI_BPORCH;
+    localparam [15 : 0] FULL_LINE = WIDTH + HORI_FPORCH + HORI_SYNC + HORI_BPORCH;
     // store the height of an frame
-    parameter [15 : 0] FULL_FRAME = HEIGHT + VERT_FPORCH + VERT_SYNC + VERT_BPORCH;
+    localparam [15 : 0] FULL_FRAME = HEIGHT + VERT_FPORCH + VERT_SYNC + VERT_BPORCH;
 
     // store the current pixel x position
     reg [15 : 0] c_pix_x;
