@@ -73,9 +73,9 @@ module vga #(
     reg [15 : 0] c_pix_y;
 
     // main process for updateing the pixels
-    always @(posedge clk or posedge res) begin
+    always @(posedge clk or posedge rst) begin
         // check if the chip is being reseted
-        if (res) begin
+        if (rst) begin
             // reset all registers 0
             //  reset the current x position
             c_pix_x <= 0;
