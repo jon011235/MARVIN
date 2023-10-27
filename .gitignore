@@ -4,7 +4,8 @@
 !*.txt
 
 # VHDL
-!*.sv         # Note: .sv for SystemVerilog 2006 Standard instead of .v for Verliog 2001 standard
+# Note: Using .sv for SystemVerilog 2006 Standard instead of .v for Verliog 2001 standard
+!*.sv
 !*.vhdl
 !*.vhd
 
