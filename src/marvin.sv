@@ -59,7 +59,7 @@ module marvin(
     input [2:1] gsensor_int         // GSensor interrupt pins   3.3V LVTTL
 );
     // ===== Variables ========
-    wire bus_t;
+    wire pkg::bus_t bus;
 
     // ===== BASIC ============
     assign ledr = '0;
