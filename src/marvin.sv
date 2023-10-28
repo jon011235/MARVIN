@@ -63,9 +63,7 @@ module marvin(
     assign gpio = '0;
     assign ardu_gpio = '0;
     assign ardu_rst_ = 0;
-    assign vga_color.red = '0;
-    assign vga_color.green = '0;
-    assign vga_color.blue = '0;
+    assign vga_color = '0;
     assign vga_hs = 0;
     assign vga_vs = 0;
 

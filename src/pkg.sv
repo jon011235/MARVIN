@@ -8,6 +8,6 @@
 */
 
 package pkg;
-    typedef struct { logic [3:0] red, green, blue; } color;
+    typedef struct packed { logic [3:0] red, green, blue; } color;
     typedef struct packed { logic a, b, c, d, e, f, g, p; } seg7p;
 endpackage
