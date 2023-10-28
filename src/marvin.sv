@@ -25,7 +25,7 @@ module marvin(
     // ===== BASIC OUT ===================================================
     output [9:0] ledr,              // 10 red leds              3.3V LVTTL
 
-    output [5:0][7:0] hex,          // 6x8-element hex display  3.3V LVTTL
+    output pkg::seg7p [5:0] hex,    // 6x8-element hex display  3.3V LVTTL
 
     // ===== BASIC IO ====================================================
     inout [35:0] gpio,              // 36 pin expansion header  3.3V LVTTL
