@@ -58,6 +58,10 @@ module marvin(
     output gsensor_sclk,            // I2C / SPI serial clock   3.3V LVTTL
     input [2:1] gsensor_int         // GSensor interrupt pins   3.3V LVTTL
 );
+    // ===== Variables ========
+    wire bus_t;
+
+    // ===== BASIC ============
     assign ledr = '0;
     assign hex = '0;
     assign gpio = '0;
