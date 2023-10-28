@@ -25,7 +25,7 @@ module marvin(
     // ===== BASIC OUT ===================================================
     output [9:0] ledr,              // 10 red leds              3.3V LVTTL
 
-    output pkg::seg7p [5:0] hex,    // 6x8-element hex display  3.3V LVTTL
+    output pkg::seg7p_t [5:0] hex,    // 6x8-element hex display  3.3V LVTTL
 
     // ===== BASIC IO ====================================================
     inout [35:0] gpio,              // 36 pin expansion header  3.3V LVTTL
@@ -35,7 +35,7 @@ module marvin(
     inout ardu_rst_,                // Arduino reset            3.3V Schmitt
 
     // ===== VGA =========================================================
-    output pkg::color vga_color,    // 3x4 VGA color output     3.3V LVTTL
+    output pkg::color_t vga_color,    // 3x4 VGA color output     3.3V LVTTL
     output vga_hs,                  // VGA horizontal sync      3.3V LVTTL
     output vga_vs,                  // VGA vertical sync        3.3V LVTTL
 
