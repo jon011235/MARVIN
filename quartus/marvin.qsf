@@ -381,7 +381,8 @@ set_location_assignment PIN_M20 -to hex_[5].e
 set_location_assignment PIN_N19 -to hex_[5].f
 set_location_assignment PIN_N20 -to hex_[5].g
 set_location_assignment PIN_L19 -to hex_[5].p
-set_location_assignment PIN_B8 -to key_[0]
+set_location_assignment PIN_B8 -to 
+_[0]
 set_location_assignment PIN_A7 -to key_[1]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_[5].p
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_[0].a
