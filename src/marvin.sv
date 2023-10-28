@@ -59,7 +59,7 @@ module marvin(
 );
     // ===== BASIC ============
     assign ledr = '0;
-    assign hex = '1;
+    assign hex_ = '1;
     assign gpio = '0;
     assign ardu_gpio = '0;
     assign ardu_rst_ = 0;
