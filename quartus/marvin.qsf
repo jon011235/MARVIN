@@ -332,7 +332,6 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to vga_color.red[1]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to vga_color.red[0]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to vga_hs
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to vga_vs
-set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
 set_location_assignment PIN_C14 -to hex_[0].a
 set_location_assignment PIN_E15 -to hex_[0].b
 set_location_assignment PIN_C15 -to hex_[0].c
@@ -433,3 +432,4 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_[5].f
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_[5].g
 set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to key_[1]
 set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to key_[0]
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
