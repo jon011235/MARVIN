@@ -1,7 +1,6 @@
 /*
     Project:    MARVIN
     Sector:     TOP
-    Entity:     marvin
     Summary:    Toplevel design file
     Device:     terasIC® DE10-Lite Development Board with Altera® MAX 10 10M50DAF484C7G FPGA
     Authors:    Leonard Pfeiffer
@@ -18,14 +17,14 @@ module marvin(
     input clk2_50,                  // 50MHz secondary clock    3.3V LVTTL
 
     // ===== BASIC IN ====================================================
-    input [1:0] key,                // 2 push buttons           3.3V Schmitt
+    input [1:0] key_,               // 2 push buttons           3.3V Schmitt
 
     input [9:0] sw,                 // 10 toggle switches       3.3V LVTTL
 
     // ===== BASIC OUT ===================================================
     output [9:0] ledr,              // 10 red leds              3.3V LVTTL
 
-    output pkg::seg7p_t [5:0] hex,    // 6x8-element hex display  3.3V LVTTL
+    output pkg::seg7p_t [5:0] hex_, // 6x8-element hex display  3.3V LVTTL
 
     // ===== BASIC IO ====================================================
     inout [35:0] gpio,              // 36 pin expansion header  3.3V LVTTL
@@ -60,7 +59,7 @@ module marvin(
 );
     // ===== BASIC ============
     assign ledr = '0;
-    assign hex = '0;
+    assign hex = '1;
     assign gpio = '0;
     assign ardu_gpio = '0;
     assign ardu_rst_ = 0;
