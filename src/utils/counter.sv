@@ -9,18 +9,18 @@ module counter #(
     parameter T
 )(
     input clk, rst,
-    output [$clog2(T) - 1 : 0] cnt
+    output [$clog2(T) - 1 : 0] count
 );
-    reg cntr;
+    reg countr;
 
     always @(posedge clk, posedge rst)
         if (rst)
-            cntr = '0;
+            countr = '0;
         else
-            if (cntr < T - 1)
-                cntr++;
+            if (countr < T - 1)
+                countr++;
             else
-                cntr = '0;
+                countr = '0;
     
-    assign cnt = cntr;
+    assign count = countr;
 endmodule : counter
