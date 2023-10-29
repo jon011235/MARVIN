@@ -9,26 +9,26 @@ import pkg::*;
 
 module vga #(
         // Screen informations
-        parameter [15:0] WIDTH = 0,         // Screen width (pixels)
-        parameter [15:0] HEIGHT = 0,        // Screen height (pixels)
+        parameter int unsigned WIDTH = 800,   // Screen width (pixels)
+        parameter int unsigned HEIGHT = 600,  // Screen height (pixels)
 
         // Vertical timings
-        parameter [15:0] VERT_FPORCH = 0,   // Vertical front porch (lines)
-        parameter [15:0] VERT_BPORCH = 0,   // Vertical back porch (lines)
-        parameter [15:0] VERT_SYNC = 0,     // Vertical synchronization (lines)
+        parameter int unsigned VERT_FPORCH = 37,  // Vertical front porch (lines)
+        parameter int unsigned VERT_SYNC = 6,     // Vertical synchronization (lines)
+        parameter int unsigned VERT_BPORCH = 23,  // Vertical back porch (lines)
 
         // Horizontal timings
-        parameter [15:0] HORI_FPORCH = 0,   // Horizontal front porch (pixels)
-        parameter [15:0] HORI_BPORCH = 0,   // Horizontal bock porch (pixels)
-        parameter [15:0] HORI_SYNC = 0      // Horizontal synchronization (pixels)
+        parameter int unsigned HORI_FPORCH = 56,  // Horizontal front porch (pixels)
+        parameter int unsigned HORI_SYNC = 120,   // Horizontal synchronization (pixels)
+        parameter int unsigned HORI_BPORCH = 64   // Horizontal bock porch (pixels)
 )(
-        input pixelclk;             // Screen specific pixelclock
-        input rst,                  // Reset
-        input color_t color_in,     // Color for current pixel
+        input pixelclk,         // Screen specific pixelclock
+        input rst,              // Reset
+        input color_t color_in, // Color for current pixel
 
         // Next pixel's coordinates
-        output [15:0] pix_x,
-        output [15:0] pix_y,
+        output [$clog2(WIDTH) - 1 : 0] pix_x,
+        output [$clog2(HEIGHT) - 1 : 0] pix_y,
 
         output color_t color_out,   // VGA color output
 
@@ -38,15 +38,15 @@ module vga #(
     );
     
     // Total frame dimensions
-    localparam [15:0] FULL_LINE = WIDTH + HORI_FPORCH + HORI_SYNC + HORI_BPORCH;      // Max line length
-    localparam [15:0] FULL_FRAME = HEIGHT + VERT_FPORCH + VERT_SYNC + VERT_BPORCH;    // Max frame height
+    localparam int unsigned FULL_LINE = WIDTH + HORI_FPORCH + HORI_SYNC + HORI_BPORCH;      // Max line length
+    localparam int unsigned FULL_FRAME = HEIGHT + VERT_FPORCH + VERT_SYNC + VERT_BPORCH;    // Max frame height
     
     // Current cursor position
-    reg [15:0] c_pix_x;
-    reg [15:0] c_pix_y;
+    reg [$clog2(FULL_LINE) - 1 : 0] c_pix_x;
+    reg [$clog2(FULL_FRAME) - 1 : 0] c_pix_y;
 
     // Sequential process for updating pixels
-    always @(posedge clk or posedge rst) begin
+    always @(posedge pixelclk, posedge rst) begin
         if (rst) begin
             // Reset all registers
             c_pix_x <= 0;

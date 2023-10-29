@@ -7,7 +7,7 @@
 
 module toplevel_debug (
     input clk_50,               // 50MHz clock input
-    input rst,
+    input rst_,                 // Lowactive reset
 
     output color_t vga_color,   // VGA color output
     output vga_vsync,           // Vertical synchronization output
@@ -15,22 +15,13 @@ module toplevel_debug (
 
     output reg [9:0] leds       // 10 red leds
 );
-    wire [15:0] pix_x;
-    wire [15:0] pix_y;
+    wire [$clog2('d800) - 1 : 0] pix_x;
+    wire [$clog2('d600) - 1 : 0] pix_y;
     reg color_t col;
 
-    vga #(
-        .WIDTH('d800),
-        .HEIGHT('d600),
-        .VERT_FPORCH('d37),
-        .VERT_BPORCH('d23),
-        .VERT_SYNC('d6),
-        .HORI_FPORCH('d56),
-        .HORI_BPORCH('d64),
-        .HORI_SYNC('d120)
-    )(
+    vga (
         .pixelclk(clk_50),
-        .rst(!rst),
+        .rst(!rst_),
         .color(col),
 
         .pix_x(pix_x),
@@ -47,6 +38,4 @@ module toplevel_debug (
 
     assign leds[9:1] = '0;
     assign leds[0] = '1;
-endmodule
-
 endmodule
