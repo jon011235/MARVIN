@@ -21,6 +21,6 @@ module counter #(
                 countr++;
             else
                 countr = '0;
-    
+
     assign count = countr;
 endmodule : counter
