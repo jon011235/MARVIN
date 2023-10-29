@@ -23,7 +23,7 @@ module ckegen1 #(
                 cnt = '0;
 
     assign gen = 1 ? cnt == '0 && !rst : 0;
-endmodule
+endmodule : ckegen1
 
 module ckegen2 #(
     parameter int T = 'd50000000
@@ -43,4 +43,4 @@ module ckegen2 #(
                 cnt = '0;
 
     assign gen = 1 ? cnt < T >> 1 && !rst : 0;
-endmodule
+endmodule : ckegen2
