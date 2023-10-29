@@ -1,7 +1,7 @@
 /*
     Project:    MARVIN
     Sector:     UTILS
-    Summary:    Clock enable generators for one cycle (1) or half of the cycles (2)
+    Summary:    Generic clock enable generators for one cycle (1) or half of the cycles (2)
     Authors:    Leonard Pfeiffer
 */
 
