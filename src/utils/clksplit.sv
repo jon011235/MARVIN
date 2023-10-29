@@ -1,7 +1,7 @@
 /*
     Project:    MARVIN
     Sector:     UTILS
-    Summary:    Generic clock enable generator, active half of the cycles
+    Summary:    Generic clock splitter, active half of the cycles
     Authors:    Leonard Pfeiffer
 */
 
