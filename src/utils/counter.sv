@@ -6,7 +6,7 @@
 */
 
 module counter #(
-    parameter T
+    parameter int T
 )(
     input clk, rst,
     output [$clog2(T) - 1 : 0] count
