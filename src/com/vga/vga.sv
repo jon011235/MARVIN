@@ -1,9 +1,8 @@
 /*
     Project:    MARVIN
     Sector:     VGA
-    Entity:     vga
-    Summary:    output using vga protocol
-    Authors:    DM8AT
+    Summary:    Output using vga protocol
+    Authors:    DM8AT, Leonard Pfeiffer
 */
 
 module vga #(

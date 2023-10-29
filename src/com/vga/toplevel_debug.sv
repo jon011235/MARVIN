@@ -1,9 +1,8 @@
 /*
     Project:    MARVIN
-    Sector:     debuging
-    Entity:     toplevel_debug
-    Summary:    pass debug data to the FPGA
-    Authors:    DM8AT
+    Sector:     Debugging
+    Summary:    Pass debug data to the FPGA
+    Authors:    DM8AT, Leonard Pfeiffer
 */
 
 module toplevel_debug (
