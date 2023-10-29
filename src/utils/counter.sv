@@ -6,7 +6,7 @@
 */
 
 module counter #(
-    parameter int T
+    parameter int T // Largest number that will be reached
 )(
     input clk, rst,
     output [$clog2(T) - 1 : 0] count
@@ -17,7 +17,7 @@ module counter #(
         if (rst)
             countr = '0;
         else
-            if (countr < T - 1)
+            if (countr < T)
                 countr++;
             else
                 countr = '0;
