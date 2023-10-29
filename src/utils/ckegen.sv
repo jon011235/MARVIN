@@ -5,7 +5,7 @@
     Authors:    Leonard Pfeiffer
 */
 
-module ckegen1 #(
+module ckegen #(
     parameter int T = 'd50000000
 )(
     input wire clk, rst,

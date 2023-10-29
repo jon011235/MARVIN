@@ -5,7 +5,7 @@
     Authors:    Leonard Pfeiffer
 */
 
-module ckegen2 #(
+module clksplit #(
     parameter int T = 'd50000000
 )(
     input wire clk, rst,
