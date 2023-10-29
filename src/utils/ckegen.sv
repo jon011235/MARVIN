@@ -42,5 +42,5 @@ module ckegen2 #(
             else
                 cnt = '0;
 
-    assign gen = 1 ? cnt < T >> 1 && !rst : 0;
+    assign gen = 1 ? cnt <= (T >> 1) + 1 && !rst : 0;
 endmodule : ckegen2
