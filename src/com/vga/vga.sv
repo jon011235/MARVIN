@@ -36,7 +36,7 @@ module vga #(
         output vga_vsync,
         output vga_hsync
     );
-    
+
     // Total frame dimensions
     localparam int unsigned FULL_LINE = WIDTH + HORI_FPORCH + HORI_SYNC + HORI_BPORCH;      // Max line length
     localparam int unsigned FULL_FRAME = HEIGHT + VERT_FPORCH + VERT_SYNC + VERT_BPORCH;    // Max frame height
