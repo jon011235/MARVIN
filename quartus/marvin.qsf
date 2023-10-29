@@ -213,6 +213,12 @@ set_location_assignment PIN_P19 -to dram_addr[9]
 set_location_assignment PIN_T20 -to dram_addr[10]
 set_location_assignment PIN_P20 -to dram_addr[11]
 set_location_assignment PIN_R20 -to dram_addr[12]
+set_location_assignment PIN_T21 -to dram_bank[0]
+set_location_assignment PIN_T22 -to dram_bank[1]
+set_location_assignment PIN_U21 -to dram_cas_
+set_location_assignment PIN_N22 -to dram_cke
+set_location_assignment PIN_L14 -to dram_clk
+set_location_assignment PIN_U20 -to dram_cs_
 set_location_assignment PIN_Y21 -to dram_dq[0]
 set_location_assignment PIN_Y20 -to dram_dq[1]
 set_location_assignment PIN_AA22 -to dram_dq[2]
