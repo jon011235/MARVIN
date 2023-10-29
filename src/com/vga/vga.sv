@@ -5,147 +5,93 @@
     Authors:    DM8AT, Leonard Pfeiffer
 */
 
+import pkg::*;
+
 module vga #(
-        // input information about the screen
-        // the screen width
-        parameter [15 : 0] WIDTH = 0,
-        // the screen height
-        parameter [15 : 0] HEIGHT = 0,
+        // Screen informations
+        parameter [15:0] WIDTH = 0,         // Screen width (pixels)
+        parameter [15:0] HEIGHT = 0,        // Screen height (pixels)
 
-        // input information about the vga timings
-        //  vertical timings
-        //   vertical front porch
-        parameter [15 : 0] VERT_FPORCH = 0,
-        //   vertical back porch
-        parameter [15 : 0] VERT_BPORCH = 0,
-        //   vertical sync pulse length
-        parameter [15 : 0] VERT_SYNC = 0,
+        // Vertical timings
+        parameter [15:0] VERT_FPORCH = 0,   // Vertical front porch (lines)
+        parameter [15:0] VERT_BPORCH = 0,   // Vertical back porch (lines)
+        parameter [15:0] VERT_SYNC = 0,     // Vertical synchronization (lines)
 
-        //  horizontal timins
-        //   horizontal front porch
-        parameter [15 : 0] HORI_FPORCH = 0,
-        //   horizontal back porch
-        parameter [15 : 0] HORI_BPORCH = 0,
-        //   horizontal sync pulse length
-        parameter [15 : 0] HORI_SYNC = 0
-)
-(
-        // input the CORRECT clock speed
-        input clk,
-        // reset the chip
-        input rst,
-        // input the color for the pixel
-        input [11 : 0] color,
+        // Horizontal timings
+        parameter [15:0] HORI_FPORCH = 0,   // Horizontal front porch (pixels)
+        parameter [15:0] HORI_BPORCH = 0,   // Horizontal bock porch (pixels)
+        parameter [15:0] HORI_SYNC = 0      // Horizontal synchronization (pixels)
+)(
+        input pixelclk;             // Screen specific pixelclock
+        input rst,                  // Reset
+        input color_t color_in,     // Color for current pixel
 
-        // output the next pixel coordinate
-        //  x component
-        output [15 : 0] pix_x,
-        //  y component
-        output [15 : 0] pix_y,
+        // Next pixel's coordinates
+        output [15:0] pix_x,
+        output [15:0] pix_y,
 
-        // output the vga color
-        //  the red component
-        output [3 : 0] vga_r,
-        //  the green component
-        output [3 : 0] vga_g,
-        //  the blue component
-        output [3 : 0] vga_b,
+        output color_t color_out,   // VGA color output
 
-        // output the vga syncronisation
-        //  vertical syncronisation
+        // VGA synchronization output
         output vga_vsync,
-        //  horizontal syncronistaion
         output vga_hsync
     );
+    
+    // Total frame dimensions
+    localparam [15:0] FULL_LINE = WIDTH + HORI_FPORCH + HORI_SYNC + HORI_BPORCH;      // Max line length
+    localparam [15:0] FULL_FRAME = HEIGHT + VERT_FPORCH + VERT_SYNC + VERT_BPORCH;    // Max frame height
+    
+    // Current cursor position
+    reg [15:0] c_pix_x;
+    reg [15:0] c_pix_y;
 
-    // store the maximal length of an line
-    localparam [15 : 0] FULL_LINE = WIDTH + HORI_FPORCH + HORI_SYNC + HORI_BPORCH;
-    // store the height of an frame
-    localparam [15 : 0] FULL_FRAME = HEIGHT + VERT_FPORCH + VERT_SYNC + VERT_BPORCH;
-
-    // store the current pixel x position
-    reg [15 : 0] c_pix_x;
-    // store the current pixel y position
-    reg [15 : 0] c_pix_y;
-
-    // main process for updateing the pixels
+    // Sequential process for updating pixels
     always @(posedge clk or posedge rst) begin
-        // check if the chip is being reseted
         if (rst) begin
-            // reset all registers 0
-            //  reset the current x position
+            // Reset all registers
             c_pix_x <= 0;
-            //  reset the current y position
             c_pix_y <= 0;
-        end
-        else begin
-            // increase the pixel x position by 1
-            c_pix_x ++;
+        end else begin
+            c_pix_x ++; // Increase the pixel x position by 1
 
-            // check if the pixel x position is greater than a full line
+            // Check if the pixel x position is greater than a full line
             if (c_pix_x >= FULL_LINE) begin
-                // reset the current pixel on the x position
-                c_pix_x = 0;
-                // increase the current y position by 1
-                c_pix_y ++;
+                c_pix_x = 0;    // Reset the current pixel on the x position
+                c_pix_y ++;     // Increase the current y position by 1
             end
 
-            // check if the pixel y position is greater than a full frame
+            // Check if the pixel y position is greater than a full frame
             if (c_pix_y >= FULL_FRAME) begin
-                // reset the current pixel on the y position
-                c_pix_y = 0;
+                c_pix_y = 0;    // Reset the current pixel on the y position
             end
 
-            // check if the pixel is in the visible area
+            // Check if the pixel is in the visible area
             if ((c_pix_x < WIDTH) && (c_pix_y < HEIGHT)) begin
-                // output the color to vga
-                //  output the red component
-                vga_r = color[11 : 8];
-                //  ouptut the green component
-                vga_g = color[7 : 4];
-                //  output the blue component
-                vga_b = color[3 : 0];
+                color_out = color_in;   // Output the color to vga
 
-                // output the next pixel
-                //  output the x component
-                pix_x = c_pix_x+1;
-                //  output the y component
-                pix_y = c_pix_y+1;
-            end
-            else begin
-                // set the color to black
-                //  set red to 0
-                vga_r = '0;
-                //  set green to 0
-                vga_g = '0;
-                //  set blue to 0
-                vga_b = '0;
+                // Output the next pixel
+                pix_x = c_pix_x+1;  // Output the x component
+                pix_y = c_pix_y+1;  // Output the y component
+            end else begin
+                color_out = '0; // Set the color to black
 
-                // output 0,0 as pixel
-                //  output the x component
-                pix_x = '0;
-                //  output the y component
-                pix_y = '0;
+                // Output 0,0 as pixel
+                pix_x = '0;     //  Output the x component
+                pix_y = '0;     //  Output the y component
             end
 
-            // check if the vertical synchronisation should be active
-            if ((c_pix_y > (HEIGHT+VERT_FPORCH)) && (c_pix_y < (HEIGHT+VERT_FPORCH+VERT_SYNC))) begin
-                // set the vertical sync to 1
-                vga_vsync = 1;
-            end
-            else begin
-                // set the vertical sync to low
-                vga_vsync = 0;
+            // Check if the vertical synchronisation should be active
+            if ((c_pix_y > (HEIGHT + VERT_FPORCH)) && (c_pix_y < (HEIGHT + VERT_FPORCH + VERT_SYNC))) begin
+                vga_vsync = 1;  // Set the vertical sync to 1
+            end else begin
+                vga_vsync = 0;  // Set the vertical sync to low
             end
 
-            // check if the horizontal synchronisation should be active
-            if ((c_pix_x > (WIDTH+HORI_FPORCH)) && (c_pix_x < (WIDTH+HORI_FPORCH+HORI_SYNC))) begin
-                // set the horizontal synchronisation to 1
-                vga_hsync = 1;
-            end
-            else begin
-                // set the horizontal synchronisation to low
-                vga_hsync = 0;
+            // Check if the horizontal synchronisation should be active
+            if ((c_pix_x > (WIDTH + HORI_FPORCH)) && (c_pix_x < (WIDTH + HORI_FPORCH + HORI_SYNC))) begin
+                vga_hsync = 1;  // Set the horizontal synchronisation to 1
+            end else begin
+                vga_hsync = 0;  // Set the horizontal synchronisation to low
             end
         end
     end
