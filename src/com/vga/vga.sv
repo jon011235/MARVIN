@@ -95,5 +95,4 @@ module vga #(
             end
         end
     end
-
 endmodule
