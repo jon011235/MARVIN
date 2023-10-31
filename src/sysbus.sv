@@ -36,7 +36,7 @@ module sysbus(
     output dram_ras_,               // SDRAM row address strobe
     output dram_cas_,               // SDRAM col address strobe
     output dram_cke,                // SDRAM clock enable
-    output dram_clk,                // SDRAM clock
+    input dram_clk,                // SDRAM clock
     output dram_re,                 // SDRAM read enable
     output dram_cs_,                // SDRAM chip select
 
@@ -64,7 +64,6 @@ module sysbus(
     assign dram_cas_ = 0;
     assign dram_ras_ = 0;
     assign dram_cke = 0;
-    assign dram_clk = 0;
     assign dram_re = 0;
     assign dram_cs_ = 0;
 

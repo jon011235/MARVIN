@@ -79,7 +79,7 @@ module marvin(
         .dram_ras_(dram_ras_),
         .dram_cas_(dram_cas_),
         .dram_cke(dram_cke),
-        .dram_clk(dram_clk),
+        .dram_clk(clk_200),
         .dram_re(dram_re),
         .dram_cs_(dram_cs_),
 
@@ -89,6 +89,19 @@ module marvin(
         .gsensor_sclk(gsensor_sclk),
         .gsensor_int(gsensor_int)
     );
+
+    // ===== PLL =====
+
+    wire clk_200;
+
+    pll pll (
+        .inclk0(clk1_50),
+        .c0(clk_200)
+    );
+
+    assign dram_clk = clk_200;
+
+    // ===== Assignments =====
 
     assign ardu_rst_ = 'z;
 endmodule

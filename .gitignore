@@ -14,6 +14,7 @@
 !*.qsf
 !*.sdc
 !*.srf
+!*.ppf
 
 # Platform Designer (Qsys)
 !*.qsys
