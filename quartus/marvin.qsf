@@ -51,7 +51,7 @@ set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
 set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim (SystemVerilog)"
-set_global_assignment -name EDA_TIME_SCALE "1 ns" -section_id eda_simulation
+set_global_assignment -name EDA_TIME_SCALE "1 ps" -section_id eda_simulation
 set_global_assignment -name EDA_OUTPUT_DATA_FORMAT "SYSTEMVERILOG HDL" -section_id eda_simulation
 set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST OFF -section_id eda_board_design_timing
 set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST OFF -section_id eda_board_design_symbol
@@ -184,10 +184,10 @@ set_location_assignment PIN_AA19 -to ardu_gpio[11]
 set_location_assignment PIN_Y19 -to ardu_gpio[12]
 set_location_assignment PIN_AB20 -to ardu_gpio[13]
 set_location_assignment PIN_AB21 -to ardu_gpio[14]
-set_location_assignment PIN_AA20 -to ardu_gpio[15]
+set_location_assignment PIN_AA20 -to ardu_gpio[15] -disable
 set_location_assignment PIN_F16 -to ardu_rst_
 set_location_assignment PIN_AA1 -to vga_color.red[0]
-set_location_assignment PIN_V1 -to vga_color.red[1]
+set_location_assignment PIN_V1 -to vga_color.red[1] -disable
 set_location_assignment PIN_Y2 -to vga_color.red[2]
 set_location_assignment PIN_Y1 -to vga_color.red[3]
 set_location_assignment PIN_W1 -to vga_color.green[0]
@@ -436,5 +436,191 @@ set_global_assignment -name SYSTEMVERILOG_FILE ../src/utils/ckegen.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ../src/utils/pwmgen.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ../src/utils/counter.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ../src/pkg.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../src/sysbus.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ../src/marvin.sv
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ardu_gpio[15]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ardu_gpio[14]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ardu_gpio[13]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ardu_gpio[12]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ardu_gpio[11]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ardu_gpio[10]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ardu_gpio[9]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ardu_gpio[8]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ardu_gpio[7]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ardu_gpio[6]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ardu_gpio[5]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ardu_gpio[4]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ardu_gpio[3]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ardu_gpio[2]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ardu_gpio[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ardu_gpio[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ardu_rst_
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to clk1_50
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to clk2_50
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to clk_10
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_addr[12]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_addr[11]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_addr[10]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_addr[9]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_addr[8]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_addr[7]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_addr[6]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_addr[5]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_addr[4]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_addr[3]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_addr[2]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_addr[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_addr[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_bank[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_bank[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_cas_
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_cke
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_clk
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_cs_
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_dq[15]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_dq[14]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_dq[13]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_dq[12]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_dq[11]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_dq[10]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_dq[9]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_dq[8]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_dq[7]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_dq[6]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_dq[5]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_dq[4]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_dq[3]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_dq[2]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_dq[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_dq[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_qdm[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_qdm[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_ras_
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_re
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[35]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[34]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[33]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[32]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[31]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[30]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[29]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[28]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[27]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[26]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[25]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[24]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[23]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[22]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[21]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[20]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[19]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[18]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[17]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[16]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[15]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[14]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[13]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[12]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[11]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[10]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[9]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[8]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[7]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[6]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[5]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[4]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[3]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[2]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gpio[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gsensor_cs_
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gsensor_int[2]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gsensor_int[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gsensor_sclk
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gsensor_sdi
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to gsensor_sdo
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[0].a
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[0].b
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[0].c
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[0].d
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[0].e
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[0].f
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[0].g
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[0].p
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[1].a
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[1].b
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[1].c
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[1].d
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[1].e
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[1].f
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[1].g
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[1].p
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[2].a
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[2].b
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[2].c
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[2].d
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[2].e
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[2].f
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[2].g
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[2].p
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[3].a
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[3].b
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[3].c
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[3].d
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[3].e
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[3].f
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[3].g
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[3].p
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[4].a
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[4].b
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[4].c
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[4].d
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[4].e
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[4].f
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[4].g
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[4].p
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[5].a
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[5].b
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[5].c
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[5].d
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[5].e
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[5].f
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[5].g
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hex_[5].p
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to key_[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to key_[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ledr[9]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ledr[8]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ledr[7]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ledr[6]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ledr[5]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ledr[4]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ledr[3]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ledr[2]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ledr[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ledr[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to sw[9]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to sw[8]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to sw[7]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to sw[6]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to sw[5]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to sw[4]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to sw[3]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to sw[2]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to sw[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to sw[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to vga_color.blue[3]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to vga_color.blue[2]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to vga_color.blue[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to vga_color.blue[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to vga_color.green[3]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to vga_color.green[2]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to vga_color.green[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to vga_color.green[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to vga_color.red[3]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to vga_color.red[2]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to vga_color.red[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to vga_color.red[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to vga_hs
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to vga_vs
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
