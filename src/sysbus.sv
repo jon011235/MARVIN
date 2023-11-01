@@ -9,9 +9,9 @@ import pkg::*;
 module sysbus(
     input clk_10, clk1_50, clk2_50, // Clocks
 
-    input rst,                      // Reset
+    input rst_,                     // Reset
 
-    input btn,                      // Push-button
+    input btn_,                     // Push-button
 
     input [9:0] sw,                 // Toggle switches
 
