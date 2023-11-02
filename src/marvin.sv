@@ -66,10 +66,4 @@ module marvin (
     assign dram_cke = 0;
     assign dram_re = 0;
     assign dram_cs_ = 0;
-
-    // ===== GSENSOR ==========
-    assign gsensor_sdi = 'z;
-    assign gsensor_sdo = 'z;
-    assign gsensor_cs_ = 0;
-    assign gsensor_sclk = 0;
 endmodule

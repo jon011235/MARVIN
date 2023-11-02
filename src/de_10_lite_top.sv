@@ -81,13 +81,7 @@ module de_10_lite_top (
         .dram_cke(dram_cke),
         .dram_clk(clk_200),
         .dram_re(dram_re),
-        .dram_cs_(dram_cs_),
-
-        .gsensor_sdi(gsensor_sdi),
-        .gsensor_sdo(gsensor_sdo),
-        .gsensor_cs_(gsensor_cs_),
-        .gsensor_sclk(gsensor_sclk),
-        .gsensor_int(gsensor_int)
+        .dram_cs_(dram_cs_)
     );
 
     // ===== PLL =====
@@ -104,4 +98,10 @@ module de_10_lite_top (
     // ===== Assignments =====
 
     assign ardu_rst_ = 'z;
+
+    // ===== GSENSOR ==========
+    assign gsensor_sdi = 'z;
+    assign gsensor_sdo = 'z;
+    assign gsensor_cs_ = 0;
+    assign gsensor_sclk = 0;
 endmodule
