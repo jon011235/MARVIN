@@ -84,17 +84,6 @@ module de_10_lite_top (
         .dram_cs_(dram_cs_)
     );
 
-    // ===== PLL =====
-
-    wire clk_200;
-
-    pll pll (
-        .inclk0(clk1_50),
-        .c0(clk_200)
-    );
-
-    assign dram_clk = clk_200;
-
     // ===== Assignments =====
 
     assign ardu_rst_ = 'z;

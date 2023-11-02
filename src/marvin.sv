@@ -36,7 +36,7 @@ module marvin (
     output dram_ras_,               // SDRAM row address strobe
     output dram_cas_,               // SDRAM col address strobe
     output dram_cke,                // SDRAM clock enable
-    input dram_clk,                // SDRAM clock
+    output dram_clk,                // SDRAM clock
     output dram_re,                 // SDRAM read enable
     output dram_cs_,                // SDRAM chip select
 
@@ -47,6 +47,17 @@ module marvin (
     output gsensor_sclk,            // I2C / SPI serial clock
     input [2:1] gsensor_int         // GSensor interrupt pins
 );
+    // ===== PLL =====
+
+    wire clk_200;
+
+    pll pll (
+        .inclk0(clk1_50),
+        .c0(clk_200)
+    );
+
+    assign dram_clk = clk_200;
+
     // ===== BASIC ============
     assign led = '0;
     assign hex_ = '0;
