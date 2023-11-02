@@ -468,7 +468,7 @@ set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_bank[1]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_bank[0]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_cas_
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_cke
-set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_clk
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to dram_clk
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_cs_
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_dq[15]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_dq[14]
@@ -624,5 +624,5 @@ set_global_assignment -name SYSTEMVERILOG_FILE ../src/utils/counter.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ../src/pkg.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ../src/marvin.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ../src/de_10_lite_top.sv
-set_global_assignment -name QIP_FILE ../qsys/pll.qip
+set_global_assignment -name QIP_FILE ../qsys/pll/pll.qip
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
