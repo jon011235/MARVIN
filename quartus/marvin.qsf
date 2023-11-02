@@ -181,10 +181,10 @@ set_location_assignment PIN_AA19 -to ardu_gpio[11]
 set_location_assignment PIN_Y19 -to ardu_gpio[12]
 set_location_assignment PIN_AB20 -to ardu_gpio[13]
 set_location_assignment PIN_AB21 -to ardu_gpio[14]
-set_location_assignment PIN_AA20 -to ardu_gpio[15] -disable
+set_location_assignment PIN_AA20 -to ardu_gpio[15]
 set_location_assignment PIN_F16 -to ardu_rst_
 set_location_assignment PIN_AA1 -to vga_color.red[0]
-set_location_assignment PIN_V1 -to vga_color.red[1] -disable
+set_location_assignment PIN_V1 -to vga_color.red[1]
 set_location_assignment PIN_Y2 -to vga_color.red[2]
 set_location_assignment PIN_Y1 -to vga_color.red[3]
 set_location_assignment PIN_W1 -to vga_color.green[0]
