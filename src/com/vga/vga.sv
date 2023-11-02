@@ -15,12 +15,12 @@ module vga #(
         // Horizontal timings
         parameter int unsigned H_FP = 56,       // Horizontal front porch (pixels)
         parameter int unsigned H_SYNC = 120,    // Horizontal synchronization (pixels)
-        parameter int unsigned H_BP = 64        // Horizontal bock porch (pixels)
+        parameter int unsigned H_BP = 64,       // Horizontal bock porch (pixels)
 
         // Vertical timings
         parameter int unsigned V_FP = 37,       // Vertical front porch (lines)
         parameter int unsigned V_SYNC = 6,      // Vertical synchronization (lines)
-        parameter int unsigned V_BP = 23,       // Vertical back porch (lines)
+        parameter int unsigned V_BP = 23        // Vertical back porch (lines)
 )(
         input pixelclk,         // Screen specific pixelclock
         input rst,              // Reset
@@ -39,7 +39,7 @@ module vga #(
 
     // Total frame dimensions
     localparam int unsigned FullHSize = H_SIZE + H_FP + H_SYNC + H_BP;  // Max line length
-    localparam int unsigned FullVSize = V_SIZE + V_FP + V_SYNC + V:BP;  // Max frame height
+    localparam int unsigned FullVSize = V_SIZE + V_FP + V_SYNC + V_BP;  // Max frame height
     
     // Current cursor position
     reg [$clog2(FullHSize) - 1 : 0] c_pix_x;
