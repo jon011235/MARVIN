@@ -7,7 +7,7 @@
 
 import pkg::*;
 
-module marvin(
+module de_10_lite_top (
     // ===== CLOCKS ======================================================
     input clk_10,                   // 10MHz clock (for ADCs)   3.3V LVTTL
 
