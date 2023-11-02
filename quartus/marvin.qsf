@@ -431,6 +431,7 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gsensor_sclk
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gsensor_int[1]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gsensor_int[2]
 
+set_global_assignment -name SYSTEMVERILOG_FILE ../src/com/vga/vga.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ../src/utils/clksplit.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ../src/utils/ckegen.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ../src/utils/pwmgen.sv
