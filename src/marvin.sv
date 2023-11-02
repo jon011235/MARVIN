@@ -38,14 +38,7 @@ module marvin (
     output dram_cke,                // SDRAM clock enable
     output dram_clk,                // SDRAM clock
     output dram_re,                 // SDRAM read enable
-    output dram_cs_,                // SDRAM chip select
-
-    // ===== GSENSOR =====================================================
-    inout gsensor_sdi,              // I2C D or SPI I 4 / IO 3
-    inout gsensor_sdo,              // SPI O 4 / Alt I2C Addr
-    output gsensor_cs_,             // I2C / SPI Mode
-    output gsensor_sclk,            // I2C / SPI serial clock
-    input [2:1] gsensor_int         // GSensor interrupt pins
+    output dram_cs_                 // SDRAM chip select
 );
     // ===== PLL =====
 
