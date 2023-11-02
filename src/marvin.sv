@@ -53,7 +53,7 @@ module marvin (
 
     // ===== BASIC ============
     assign led = '0;
-    assign hex_ = '0;
+    assign hex_ = '1;
     assign gpio = 'z;
     assign ardu_gpio = 'z;
     assign vga_color = '0;
@@ -65,9 +65,9 @@ module marvin (
     assign dram_dq = 'z;
     assign dram_bank = '0;
     assign dram_qdm = '0;
-    assign dram_cas_ = 0;
-    assign dram_ras_ = 0;
+    assign dram_cas_ = 1;
+    assign dram_ras_ = 1;
     assign dram_cke = 0;
     assign dram_re = 0;
-    assign dram_cs_ = 0;
+    assign dram_cs_ = 1;
 endmodule

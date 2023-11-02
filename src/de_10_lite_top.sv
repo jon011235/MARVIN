@@ -91,6 +91,6 @@ module de_10_lite_top (
     // ===== GSENSOR ==========
     assign gsensor_sdi = 'z;
     assign gsensor_sdo = 'z;
-    assign gsensor_cs_ = 0;
+    assign gsensor_cs_ = 1;
     assign gsensor_sclk = 0;
 endmodule
