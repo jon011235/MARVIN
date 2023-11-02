@@ -79,7 +79,7 @@ module de_10_lite_top (
         .dram_ras_(dram_ras_),
         .dram_cas_(dram_cas_),
         .dram_cke(dram_cke),
-        .dram_clk(clk_200),
+        .dram_clk(dram_clk),
         .dram_re(dram_re),
         .dram_cs_(dram_cs_)
     );
