@@ -6,7 +6,7 @@
 
 import pkg::*;
 
-module sysbus(
+module marvin (
     input clk_10, clk1_50, clk2_50, // Clocks
 
     input rst_,                     // Reset

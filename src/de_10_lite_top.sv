@@ -56,7 +56,7 @@ module de_10_lite_top (
     output gsensor_sclk,            // I2C / SPI serial clock   3.3V LVTTL
     input [2:1] gsensor_int         // GSensor interrupt pins   3.3V LVTTL
 );
-    sysbus bus (
+    marvin marvin (
         .clk_10(clk_10),
         .clk1_50(clk1_50),
         .clk2_50(clk2_50),
