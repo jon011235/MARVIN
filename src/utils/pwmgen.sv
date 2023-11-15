@@ -16,14 +16,17 @@ module pwmgen #(
     input [Wpos - 1 : 0] pos,
     output reg pwm
 );
+    // Clock cycle count calculations
     localparam Ndut = Tdut / Tclk;
     localparam Nmin = Tmin / Tclk;
+
+    // Factor for transformation
     localparam M = (Tmax - Tmin) / (Tclk * 2**Wpos);
 
     wire [$clog2(Ndut) - 1 : 0] count;
 
     counter #(
-        .N(Ndut)
+        .T(Ndut)
     ) ctr (
         .clk(clk),
         .rst_(rst_),

@@ -9,18 +9,18 @@ module clksplit #(
     parameter int T = 'd50000000
 )(
     input wire clk, rst_, ena,
-    output reg gen
+    output reg cke
 );
-    reg [$clog2(T) - 1 : 0] cnt;
+    wire [$clog2(T) - 1 : 0] count;
 
-    always @(posedge clk, negedge rst_)
-        if (!rst_)
-            cnt = '0;
-        else
-            if (cnt < T - 1)
-                cnt++;
-            else
-                cnt = '0;
+    counter #(
+        .T(T)
+    ) ctr (
+        .clk(clk),
+        .rst_(rst_),
+        .ena(ena),
+        .count(count)
+    );
 
     assign gen = 1 ? cnt <= (T >> 1) + 1 && rst_ && ena : 0;
 endmodule

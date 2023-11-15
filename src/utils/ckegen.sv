@@ -9,21 +9,18 @@ module ckegen #(
     parameter int T = 'd50000000
 )(
     input wire clk, rst_, ena,
-    output reg gen
+    output reg cke
 );
-    reg [$clog2(T) - 1 : 0] cnt;
+    wire [$clog2(T) - 1 : 0] count;
 
-    always @(posedge clk, negedge rst_) begin
-        if (!rst_) begin
-            cnt = '0;
-        end else begin
-            if (cnt < T - 1) begin
-                cnt++;
-            end else begin
-                cnt = '0;
-            end
-        end
-    end
+    counter #(
+        .T(T)
+    ) ctr (
+        .clk(clk),
+        .rst_(rst_),
+        .ena(ena),
+        .count(count)
+    );
 
     assign gen = 1 ? cnt == '0 && rst_ && ena : 0;
 endmodule
