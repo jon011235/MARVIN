@@ -2,6 +2,7 @@
     Project:    MARVIN
     Sector:     TOP
     Summary:    System-bus file, dedicated to intermodular communication
+    Authors:    Leonard Pfeiffer
 */
 
 import pkg::*;

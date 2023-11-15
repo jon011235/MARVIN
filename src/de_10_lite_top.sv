@@ -3,6 +3,7 @@
     Sector:     TOP
     Summary:    Toplevel design file, dedicated to pll instantiations and io-formatting
     Device:     terasIC® DE10-Lite Development Board with Altera® MAX 10 10M50DAF484C7G FPGA
+    Authors:    Leonard Pfeiffer
 */
 
 import pkg::*;
