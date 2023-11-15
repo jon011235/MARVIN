@@ -22,5 +22,5 @@ module clksplit #(
         .count(count)
     );
 
-    assign gen = 1 ? cnt <= (T >> 1) + 1 && rst_ && ena : 0;
+    assign gen = 1 ? count <= (T >> 1) + 1 && rst_ && ena : 0;
 endmodule

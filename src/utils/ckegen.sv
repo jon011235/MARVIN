@@ -22,5 +22,5 @@ module ckegen #(
         .count(count)
     );
 
-    assign gen = 1 ? cnt == '0 && rst_ && ena : 0;
+    assign gen = 1 ? count == '0 && rst_ && ena : 0;
 endmodule
