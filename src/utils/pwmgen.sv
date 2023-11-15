@@ -6,22 +6,30 @@
 */
 
 module pwmgen #(
-    parameter int T
+    parameter time Tclk = 20ns,
+    parameter time Tdut = 20ms,
+    parameter time Tmin = 500us,
+    parameter time Tmax = 2500us,
+    parameter int Wpos = 8
 )(
-    input clk, rst,
-    input [$clog2(T) - 1 : 0] ton,
+    input clk, rst_, ena,
+    input [Wpos - 1 : 0] pos,
     output reg pwm
 );
-    reg [$clog2(T) - 1 : 0] countr;
+    localparam Ndut = Tdut / Tclk;
+    localparam Nmin = Tmin / Tclk;
+    localparam M = (Tmax - Tmin) / (Tclk * 2**Wpos);
 
-    always @(posedge clk, posedge rst)
-        if (rst)
-            countr = '0;
-        else
-            if (countr < T - 1)
-                countr++;
-            else
-                countr = '0;
+    wire [$clog2(Ndut) - 1 : 0] count;
 
-    assign pwm = 1 ? countr < ton && !rst : 0;
+    counter #(
+        .N(Ndut)
+    ) ctr (
+        .clk(clk),
+        .rst_(rst_),
+        .ena(ena),
+        .count(count)
+    );
+
+    assign pwm = 1 ? count < Nmin + pos * M && rst_ && ena : 0;
 endmodule

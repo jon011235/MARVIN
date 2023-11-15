@@ -65,7 +65,7 @@ module de_10_lite_top (
         .sw(sw),
         .led(ledr),
         .hex_(hex_),
-        .sgpio(ardu_gpio[15:2]),
+        .sgpio(ardu_gpio[13:0]),
         .gpio(gpio),
 
         .vga_color(vga_color),
@@ -83,8 +83,8 @@ module de_10_lite_top (
         .dram_re(dram_re),
         .dram_cs_(dram_cs_),
 
-        .uart_rx(ardu_gpio[0]),
-        .uart_tx(ardu_gpio[1])
+        .uart_rx(ardu_gpio[14]),
+        .uart_tx(ardu_gpio[15])
     );
 
     // ===== Assignments =====

@@ -56,13 +56,14 @@ module marvin (
     assign dram_clk = clk_200;
 
     // ===== BASIC ============
-    // assign led = '0;
+    assign led = '0;
     assign hex_ = '1;
-    assign sgpio = 'z;
+    assign sgpio[13:1] = 'z;
     assign gpio = 'z;
     assign vga_color = '0;
     assign vga_hs = 0;
     assign vga_vs = 0;
+    assign uart_tx = 'z;
 
     // ===== SDRAM ============
     assign dram_addr = '0;
@@ -75,22 +76,13 @@ module marvin (
     assign dram_re = 0;
     assign dram_cs_ = 1;
 
-    // ===== UUVs =============
+    // ===== UUV ==============
 
-    wire ena;
-
-    ckegen gen (
+    pwmgen uuv (
         .clk(clk1_50),
         .rst_(rst_),
-        .gen(ena)
-    );
-
-    counter #(
-        .T(1024)
-    ) ctr (
-        .clk(clk1_50),
-        .rst_(rst_),
-        .ena(ena),
-        .count(led)
+        .ena(1),
+        .pos(00000000),
+        .pwm(sgpio[0])
     );
 endmodule
