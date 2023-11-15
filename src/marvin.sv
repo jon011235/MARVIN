@@ -19,9 +19,8 @@ module marvin (
 
     output pkg::seg7p_t [5:0] hex_, // 8-element hex displays
 
+    inout [13:0] sgpio,             // Sensor shield v5.0 GPIO pins
     inout [35:0] gpio,              // GPIO pins
-
-    inout [15:0] ardu_gpio,         // Arduino connector
 
     // ===== VGA =========================================================
     output pkg::color_t vga_color,  // VGA color output
@@ -38,7 +37,12 @@ module marvin (
     output dram_cke,                // SDRAM clock enable
     output dram_clk,                // SDRAM clock
     output dram_re,                 // SDRAM read enable
-    output dram_cs_                 // SDRAM chip select
+    output dram_cs_,                // SDRAM chip select
+
+    // ===== UART ========================================================
+
+    input uart_rx,                  // UART reception
+    output uart_tx                  // UART transmission
 );
     // ===== PLLs ============
 
@@ -54,8 +58,8 @@ module marvin (
     // ===== BASIC ============
     // assign led = '0;
     assign hex_ = '1;
+    assign sgpio = 'z;
     assign gpio = 'z;
-    assign ardu_gpio = 'z;
     assign vga_color = '0;
     assign vga_hs = 0;
     assign vga_vs = 0;

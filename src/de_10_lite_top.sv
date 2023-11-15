@@ -65,8 +65,8 @@ module de_10_lite_top (
         .sw(sw),
         .led(ledr),
         .hex_(hex_),
+        .sgpio(ardu_gpio[15:2]),
         .gpio(gpio),
-        .ardu_gpio(ardu_gpio),
 
         .vga_color(vga_color),
         .vga_hs(vga_hs),
@@ -81,11 +81,16 @@ module de_10_lite_top (
         .dram_cke(dram_cke),
         .dram_clk(dram_clk),
         .dram_re(dram_re),
-        .dram_cs_(dram_cs_)
+        .dram_cs_(dram_cs_),
+
+        .uart_rx(ardu_gpio[0]),
+        .uart_tx(ardu_gpio[1])
     );
 
     // ===== Assignments =====
 
+    assign ardu_gpio[0] = 'z;
+    assign ardu_gpio[15:2] = 'z;
     assign ardu_rst_ = 'z;
 
     // ===== GSENSOR ==========
