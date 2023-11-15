@@ -40,7 +40,7 @@ module marvin (
     output dram_re,                 // SDRAM read enable
     output dram_cs_                 // SDRAM chip select
 );
-    // ===== PLL =====
+    // ===== PLLs ============
 
     wire clk_200;
 
@@ -52,7 +52,7 @@ module marvin (
     assign dram_clk = clk_200;
 
     // ===== BASIC ============
-    assign led = '0;
+    assign led[9:1] = '0;
     assign hex_ = '1;
     assign gpio = 'z;
     assign ardu_gpio = 'z;
@@ -70,4 +70,14 @@ module marvin (
     assign dram_cke = 0;
     assign dram_re = 0;
     assign dram_cs_ = 1;
+
+    // ===== UUVs =============
+
+    ckegen #(
+        .T('d1)
+    ) uuv (
+        .clk(clk1_50),
+        .rst(~rst_),
+        .gen(led[0])
+    );
 endmodule
