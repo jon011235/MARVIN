@@ -8,19 +8,22 @@
 module ckegen #(
     parameter int T = 'd50000000
 )(
-    input wire clk, rst,
+    input wire clk, rst_,
     output reg gen
 );
     reg [$clog2(T) - 1 : 0] cnt;
 
-    always @(posedge clk, posedge rst)
-        if (rst)
+    always @(posedge clk, negedge rst_) begin
+        if (!rst_) begin
             cnt = '0;
-        else
-            if (cnt < T - 1)
+        end else begin
+            if (cnt < T - 1) begin
                 cnt++;
-            else
+            end else begin
                 cnt = '0;
+            end
+        end
+    end
 
-    assign gen = 1 ? cnt == '0 && !rst : 0;
+    assign gen = 1 ? cnt == '0 && rst_ : 0;
 endmodule

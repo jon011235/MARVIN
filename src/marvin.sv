@@ -52,7 +52,7 @@ module marvin (
     assign dram_clk = clk_200;
 
     // ===== BASIC ============
-    assign led[9:1] = '0;
+    // assign led = '0;
     assign hex_ = '1;
     assign gpio = 'z;
     assign ardu_gpio = 'z;
@@ -73,11 +73,20 @@ module marvin (
 
     // ===== UUVs =============
 
-    ckegen #(
-        .T('d1)
-    ) uuv (
+    wire ena;
+
+    ckegen gen (
         .clk(clk1_50),
-        .rst(~rst_),
-        .gen(led[0])
+        .rst_(rst_),
+        .gen(ena)
+    );
+
+    counter #(
+        .T(1024)
+    ) ctr (
+        .clk(clk1_50),
+        .rst_(rst_),
+        .ena(ena),
+        .count(led)
     );
 endmodule

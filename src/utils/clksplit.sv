@@ -8,13 +8,13 @@
 module clksplit #(
     parameter int T = 'd50000000
 )(
-    input wire clk, rst,
+    input wire clk, rst_,
     output reg gen
 );
     reg [$clog2(T) - 1 : 0] cnt;
 
-    always @(posedge clk, posedge rst)
-        if (rst)
+    always @(posedge clk, negedge rst_)
+        if (!rst_)
             cnt = '0;
         else
             if (cnt < T - 1)
@@ -22,5 +22,5 @@ module clksplit #(
             else
                 cnt = '0;
 
-    assign gen = 1 ? cnt <= (T >> 1) + 1 && !rst : 0;
+    assign gen = 1 ? cnt <= (T >> 1) + 1 && rst_ : 0;
 endmodule

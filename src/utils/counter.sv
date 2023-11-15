@@ -6,21 +6,24 @@
 */
 
 module counter #(
-    parameter int T // Largest number that will be reached
+    parameter int T = 'd5000000 // Largest number that will be reached
 )(
-    input clk, rst,
+    input clk, rst_, ena,
     output [$clog2(T) - 1 : 0] count
 );
-    reg countr;
+    reg [$clog2(T) - 1 : 0] countr;
 
-    always @(posedge clk, posedge rst)
-        if (rst)
+    always @(posedge clk, negedge rst_) begin
+        if (!rst_) begin
             countr = '0;
-        else
-            if (countr < T)
+        end else if (ena) begin
+            if (countr < T) begin
                 countr++;
-            else
+            end else begin
                 countr = '0;
+            end
+        end
+    end
 
     assign count = countr;
 endmodule : counter
