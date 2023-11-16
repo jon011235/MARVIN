@@ -15,7 +15,7 @@ module rams #(
     input [DATA_ - 1 : 0] din,
     output wire [DATA_ - 1 : 0] dout
 );
-    (* ramtype = RAMT *) reg [DATA_ - 1 : 0] ram [2**ADDR_ - 1 : 0];
+    (* ramstyle = RAMT *) reg [DATA_ - 1 : 0] ram [2**ADDR_ - 1 : 0];
 
     always @(posedge clk) begin
         if (ena) begin
