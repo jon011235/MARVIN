@@ -78,12 +78,4 @@ module marvin (
     assign dram_cs_ = 1;
 
     // ===== UUV ==============
-
-    pwmgen uuv (
-        .clk(clk1_50),
-        .rst_(rst_),
-        .ena(1),
-        .pos(00000000),
-        .pwm(sgpio[0])
-    );
 endmodule
