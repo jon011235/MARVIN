@@ -617,7 +617,9 @@ set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to vga_color.red[0]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to vga_hs
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to vga_vs
 set_global_assignment -name SYSTEMVERILOG_FILE ../src/com/vga/vga.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ../src/utils/ram/rams.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../src/utils/ram/bramsd.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../src/utils/ram/brams.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../src/utils/ram/bramd.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ../src/utils/clksplit.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ../src/utils/ckegen.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ../src/utils/pwmgen.sv
