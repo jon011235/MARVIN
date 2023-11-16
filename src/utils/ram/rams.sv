@@ -10,9 +10,20 @@ module rams #(
     parameter ADDR_ = 8,
     parameter RAMT = "block"    // "auto", "logic", "block" or "ultra"
 )(
-    input clk, we,
+    input clk, ena, we,
     input [ADDR_ - 1 : 0] addr,
-    inout [DATA_ - 1 : 0] data,
+    input [DATA_ - 1 : 0] din,
+    output wire [DATA_ - 1 : 0] dout
 );
+    (* ramtype = RAMT *) reg [DATA_ - 1 : 0] ram [2**ADDR_ - 1 : 0];
 
+    always @(posedge clk) begin
+        if (ena) begin
+            if (we) begin
+                ram[addr] = din;
+            end
+        end
+    end
+
+    assign dout = ena ? ram[addr] : 'z;
 endmodule
