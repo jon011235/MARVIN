@@ -6,7 +6,7 @@
 */
 
 module clksplit #(
-    parameter int T = 'd50000000
+    parameter int unsigned T = 'd50000000
 )(
     input wire clk, rst_, ena,
     output reg cke

@@ -6,7 +6,7 @@
 */
 
 module counter #(
-    parameter int T = 'd5000000 // Max value will not be reached
+    parameter int unsigned T = 'd5000000 // Max value will not be reached
 )(
     input clk, rst_, ena,
     output [$clog2(T) - 1 : 0] count
