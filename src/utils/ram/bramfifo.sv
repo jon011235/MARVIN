@@ -10,7 +10,7 @@ module bramfifo #(
     parameter int unsigned ADDR_ = 8
 )(
     input clk, rst_, re, we,
-    output [ADDR_ : 0] fill,
+    output [ADDR_ : 0] fillc,
     input [DATA_ - 1 : 0] din,
     output [DATA_ - 1 : 0] dout
 );
@@ -34,7 +34,7 @@ module bramfifo #(
         if (!rst_) begin
             rp = '0;
             wp = '0;
-            fill = '0;
+            fillr = '0;
         end else begin
             if (re && fillr > 0) begin
                 if (rp < 2**ADDR_ - 1) begin
@@ -54,5 +54,5 @@ module bramfifo #(
         end
     end
 
-    assign fill = fillr;
+    assign fillc = fillr;
 endmodule
