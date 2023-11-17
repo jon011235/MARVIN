@@ -42,6 +42,8 @@ module bramfifo #(
                 end else begin
                     rp = '0;
                 end
+
+                fillr--;
             end
 
             if (we && fillr < 2**ADDR_) begin
@@ -50,6 +52,8 @@ module bramfifo #(
                 end else begin
                     wp = '0;
                 end
+
+                fillr++;
             end
         end
     end
