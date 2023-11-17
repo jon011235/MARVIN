@@ -30,7 +30,7 @@ module bramsd #(
         .address_a(waddr),
         .address_b(raddr),
         .data_a(din),
-        .data_b('1),
+        .data_b({8{1'b1}}),
         .q_a(),
         .q_b(dout),
         .addressstall_a(1'b0),

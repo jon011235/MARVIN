@@ -30,7 +30,7 @@ module brams #(
         .address_a(addr),
         .address_b(1'b1),
         .data_a(din),
-        .data_b(1'b1),
+        .data_b({8{1'b1}}),
         .q_a(dout),
         .q_b(),
         .addressstall_a(1'b0),

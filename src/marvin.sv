@@ -57,7 +57,7 @@ module marvin (
     assign dram_clk = clk_200;
 
     // ===== BASIC ============
-    assign led = '0;
+    assign led[9:8] = '0;
     assign hex_ = '1;
     assign sgpio[13:1] = 'z;
     assign gpio = 'z;
@@ -76,4 +76,63 @@ module marvin (
     assign dram_cke = 0;
     assign dram_re = 0;
     assign dram_cs_ = 1;
+
+    // ===== UUV ==============
+
+    reg re, we;
+    reg [7:0] din;
+
+    bramfifo fifo (
+        .clk(clk1_50),
+        .rst_(rst_),
+        .re(re),
+        .we(we),
+        .din(din),
+        .dout(led[7:0])
+    );
+
+    typedef enum logic [1:0] {W1, W2, R1, S} state_t;
+    state_t state, state_;
+
+    always @(posedge clk1_50, negedge rst_) begin
+        if(!rst_) begin
+            state = W1;
+        end else begin
+            state = state_;
+        end
+    end
+
+    always_comb begin
+        case (state)
+            W1: begin
+                re = 0;
+                we = 1;
+                din = 8'b00000001;
+                state_ = W2;
+            end
+            W2: begin
+                re = 0;
+                we = 1;
+                din = 8'b00000010;
+                state_ = R1;
+            end
+            R1: begin
+                re = 0;
+                we = 0;
+                din = '0;
+                state_ = R1;
+
+                if (!btn_) begin
+                    re = 1;
+                    state_ = S;
+                end
+            end
+            default: begin
+                re = 0;
+                we = 0;
+                din = '0;
+                state_ = S;
+            end
+        endcase
+    end
 endmodule

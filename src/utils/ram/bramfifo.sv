@@ -10,11 +10,12 @@ module bramfifo #(
     parameter int unsigned ADDR_ = 8
 )(
     input clk, rst_, re, we,
-    output [ADDR_ : 0] fillc,
+    output [ADDR_ : 0] fill,
     input [DATA_ - 1 : 0] din,
     output [DATA_ - 1 : 0] dout
 );
-    reg [ADDR_ : 0] fillr;
+    reg [ADDR_ : 0] fill_;
+    wire [DATA_ : 0] dout_;
     reg [ADDR_ - 1 : 0] rp, wp;                 // Pointers
 
     bramsd #(                                   // Read and write data
@@ -24,39 +25,42 @@ module bramfifo #(
         .clk(clk),
         .aclr(~rst_),
         .we(we),
-        .raddr(raddr),
-        .waddr(waddr),
+        .raddr(rp),
+        .waddr(wp),
         .din(din),
-        .dout(dout)
+        .dout(dout_)
     );
 
     always @(posedge clk, negedge rst_) begin   // Move pointers
         if (!rst_) begin
             rp = '0;
             wp = '0;
-            fillr = '0;
+            fill_ = '0;
         end else begin
-            if (re && fillr > 0) begin
-                if (rp < 2**ADDR_ - 1) begin
+            if (re && fill_ > 0) begin          // Read
+                if (rp < 2**ADDR_ - 1)
                     rp++;
-                end else begin
+                else begin
                     rp = '0;
                 end
 
-                fillr--;
+                if (!we)
+                    fill_--;
             end
 
-            if (we && fillr < 2**ADDR_) begin
-                if (wp < 2**ADDR_ - 1) begin
+            if (we && fill_ < 2**ADDR_) begin   // Write
+                if (wp < 2**ADDR_ - 1)
                     wp++;
-                end else begin
+                else begin
                     wp = '0;
                 end
 
-                fillr++;
+                if (!re)
+                    fill_++;
             end
         end
     end
 
-    assign fillc = fillr;
+    assign fill = fill_;
+    assign dout = rp == wp && we ? din : dout_;
 endmodule
