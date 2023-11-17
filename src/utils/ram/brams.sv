@@ -9,7 +9,7 @@ module brams #(
     parameter int unsigned ADDR_ = 8,
     parameter int unsigned DATA_ = 8
 )(
-    input clk, we,
+    input clk, aclr, we,
     input [ADDR_ - 1 : 0] addr,
     input [DATA_ - 1 : 0] din,
     output [DATA_ - 1 : 0] dout
@@ -21,7 +21,7 @@ module brams #(
         .clocken1(1'b1),
         .clocken2(1'b1),
         .clocken3(1'b1),
-        .aclr0(1'b0),
+        .aclr0(aclr),
         .aclr1(1'b0),
         .rden_a(1'b1),
         .rden_b(1'b1),
@@ -50,7 +50,7 @@ module brams #(
         bram.lpm_hint = "ENABLE_RUNTIME_MOD=NO",
         bram.lpm_type = "altsyncram",
         bram.operation_mode = "SINGLE_PORT",
-        bram.outdata_aclr_a = "NONE",
+        bram.outdata_aclr_a = "CLEAR0",
         bram.outdata_reg_a = "CLOCK0",
         bram.power_up_uninitialized = "FALSE",
         bram.read_during_write_mode_port_a = "NEW_DATA_WITH_NBE_READ",
