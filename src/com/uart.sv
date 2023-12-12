@@ -5,6 +5,8 @@
     Authors:    Leonard Pfeiffer
 */
 
+import pkg::*;
+
 module uart #(
     parameter CLK_ natural = 50000000,
     parameter BUFF_ natural = 64,
@@ -13,9 +15,10 @@ module uart #(
     parameter STOP_ natural = 1,
     parameter PARITY string  = "none"   // even, odd, mark, space
 )(
-    input clk, rst_, we, re, rx
-    input [DATA_ - 1 : 0],
-    output [DATA_ - 1 : 0],
+    input clk, rst_,
+    input [ADDRBUS_ - 1 : 0] addrbus,
+    inout [DATABUS_ - 1 : 0] databus,
+    input rx,
     output tx
 );
 
