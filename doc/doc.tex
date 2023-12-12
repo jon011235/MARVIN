@@ -31,7 +31,33 @@
 	\tableofcontents \label{toc}
 	\newpage
 
-    \section{Instructions}
+    \section{General Data}
+        \begin{center}
+            \begin{tabular}{c | c}
+                Databus width & 16 Bit \\
+                Adressbus width & 26 Bit \\
+                Clock Frequency & N/A \\
+            \end{tabular}
+        \end{center}
+
+    \section{Instruction Set} \label{instructionSet}
 
     \section{Adressing}
+        \subsection{Adress Bits}
+            \subsubsection{Adress Composition}
+                \begin{center}
+                    \begin{tabular}{c | c | c}
+                        Bits & 25 & 24 ... 0 \\ \hline
+                        Usage & Intermodular Adress & Intramodular Adress
+                    \end{tabular}
+                \end{center}
+
+            \subsubsection{Module Codes}
+                \begin{center}
+                    \begin{tabular}{c | c}
+                        Module & Code \\ \hline
+                        SDRAM & 0 \\
+                        UART & 1 \\
+                    \end{tabular}
+                \end{center}
 \end{document}
