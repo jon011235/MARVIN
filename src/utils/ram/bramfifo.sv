@@ -10,6 +10,7 @@ module bramfifo #(
     parameter int unsigned ADDR_ = 8
 )(
     input clk, rst_, re, we,
+    output full, empty,
     output [ADDR_ : 0] fill,
     input [DATA_ - 1 : 0] din,
     output [DATA_ - 1 : 0] dout
@@ -61,6 +62,8 @@ module bramfifo #(
         end
     end
 
+    assign full = fill_ == 2**ADDR_ ? 1 : 0;
+    assign empty = fill_ == 0 ? 1 : 0;
     assign fill = fill_;
     assign dout = rp == wp && we ? din : dout_;
 endmodule

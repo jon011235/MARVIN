@@ -8,6 +8,8 @@
 import pkg::*;
 
 module marvin (
+    // ===== General ========
+
     input clk_10, clk1_50, clk2_50, // Clocks
 
     input rst_,                     // Reset
@@ -23,12 +25,14 @@ module marvin (
     inout [13:0] sgpio,             // Sensor shield v5.0 GPIO pins
     inout [35:0] gpio,              // GPIO pins
 
-    // ===== VGA =========================================================
+    // ===== VGA ============
+
     output pkg::color_t vga_color,  // VGA color output
     output vga_hs,                  // VGA horizontal sync
     output vga_vs,                  // VGA vertical sync
 
-    // ===== SDRAM =======================================================
+    // ===== SDRAM ==========
+
     output [12:0] dram_addr,        // SDRAM address
     inout [15:0] dram_dq,           // SDRAM data bus
     output [1:0] dram_bank,         // SDRAM bank address
@@ -40,17 +44,25 @@ module marvin (
     output dram_re,                 // SDRAM read enable
     output dram_cs_,                // SDRAM chip select
 
-    // ===== UART ========================================================
+    // ===== UART ===========
 
     input uart_rx,                  // UART reception
     output uart_tx                  // UART transmission
 );
-    // ===== BUS =============
+    uart uuv (
+        .clk(clk1_50),
+        .rst_(rst_),
+        .databus(led[7:0]),
+        .rx(uart_rx),
+        .tx(uart_tx)
+    );
+
+    // ===== BUS ============
 
     wire [DATABUS_ - 1 : 0] databus;
     wire [ADDRBUS_ - 1 : 0] addrbus;
 
-    // ===== PLLs ============
+    // ===== PLLs ===========
 
     wire clk_200;
 
@@ -61,7 +73,8 @@ module marvin (
 
     assign dram_clk = clk_200;
 
-    // ===== BASIC ============
+    // ===== BASIC ===========
+
     assign led[9:8] = '0;
     assign hex_ = '1;
     assign sgpio[13:1] = 'z;
@@ -71,7 +84,8 @@ module marvin (
     assign vga_vs = 0;
     assign uart_tx = 'z;
 
-    // ===== SDRAM ============
+    // ===== SDRAM ===========
+    
     assign dram_addr = '0;
     assign dram_dq = 'z;
     assign dram_bank = '0;

@@ -10,7 +10,7 @@ module pwmgen #(
     parameter time DUTY = 20ms,     // PWM duty cycle duration
     parameter time MIN = 500us,     // Minimum ontime
     parameter time MAX = 2500us,    // Maximum ontime
-    parameter int unsigned POS_ = 8          // Position input width
+    parameter int unsigned POS_ = 8 // Position input width
 )(
     input clk, rst_, ena,
     input [POS_ - 1 : 0] pos,

@@ -9,36 +9,43 @@
 import pkg::*;
 
 module de_10_lite_top (
-    // ===== CLOCKS ======================================================
+
+    // ===== Clocks =========
+
     input clk_10,                   // 10MHz clock (for ADCs)   3.3V LVTTL
 
     input clk1_50,                  // 50MHz primary clock      3.3V LVTTL
 
     input clk2_50,                  // 50MHz secondary clock    3.3V LVTTL
 
-    // ===== BASIC IN ====================================================
+    // ===== Basic In =======
+
     input [1:0] key_,               // Push buttons             3.3V Schmitt
 
     input [9:0] sw,                 // Toggle switches          3.3V LVTTL
 
-    // ===== BASIC OUT ===================================================
+    // ===== Basic Out ======
+
     output [9:0] ledr,              // Red leds                 3.3V LVTTL
 
     output pkg::seg7p_t [5:0] hex_, // 8-element hex displays   3.3V LVTTL
 
-    // ===== BASIC IO ====================================================
+    // ===== Basic IO =======
+
     inout [35:0] gpio,              // Expansion header         3.3V LVTTL
 
-    // ===== ARDUINO =====================================================
+    // ===== Arduino ========
+
     inout [15:0] ardu_gpio,         // Arduino connector        3.3V LVTTL
     inout ardu_rst_,                // Arduino reset            3.3V Schmitt
 
-    // ===== VGA =========================================================
+    // ===== VGA ============
+
     output pkg::color_t vga_color,    // VGA color output       3.3V LVTTL
     output vga_hs,                  // VGA horizontal sync      3.3V LVTTL
     output vga_vs,                  // VGA vertical sync        3.3V LVTTL
 
-    // ===== SDRAM =======================================================
+    // ===== SDRAM ==========
     output [12:0] dram_addr,        // SDRAM address            3.3V LVTTL
     inout [15:0] dram_dq,           // SDRAM data bus           3.3V LVTTL
     output [1:0] dram_bank,         // SDRAM bank address       3.3V LVTTL
@@ -50,7 +57,7 @@ module de_10_lite_top (
     output dram_re,                 // SDRAM read enable        3.3V LVTTL
     output dram_cs_,                // SDRAM chip select        3.3V LVTTL
 
-    // ===== GSENSOR =====================================================
+    // ===== GSensor ========
     inout gsensor_sdi,              // I2C D or SPI I 4 / IO 3  3.3V LVTTL
     inout gsensor_sdo,              // SPI O 4 / Alt I2C Addr   3.3V LVTTL
     output gsensor_cs_,             // I2C / SPI Mode           3.3V LVTTL
@@ -84,8 +91,8 @@ module de_10_lite_top (
         .dram_re(dram_re),
         .dram_cs_(dram_cs_),
 
-        .uart_rx(ardu_gpio[14]),
-        .uart_tx(ardu_gpio[15])
+        .uart_rx(ardu_gpio[0]),
+        .uart_tx(ardu_gpio[1])
     );
 
     // ===== Assignments =====
@@ -94,7 +101,7 @@ module de_10_lite_top (
     assign ardu_gpio[15:2] = 'z;
     assign ardu_rst_ = 'z;
 
-    // ===== GSENSOR ==========
+    // ===== GSensor ==========
     assign gsensor_sdi = 'z;
     assign gsensor_sdo = 'z;
     assign gsensor_cs_ = 1;
