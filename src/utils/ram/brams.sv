@@ -11,9 +11,18 @@ module brams #(
 )(
     input clk, aclr, we,
     input [ADDR_ - 1 : 0] addr,
-    input [DATA_ - 1 : 0] din,
-    output [DATA_ - 1 : 0] dout
+    inout [DATA_ - 1 : 0] data
 );
+    wire [DATA_ - 1 : 0] din, dout;
+
+    always @(posedge clk) begin
+        if (aclr || we) begin
+            data = 'z;
+        end else begin
+            data = dout;
+        end
+    end
+
 	altsyncram	bram (
         .clock0(clk),
         .clock1(1'b1),
