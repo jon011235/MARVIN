@@ -45,6 +45,11 @@ module marvin (
     input uart_rx,                  // UART reception
     output uart_tx                  // UART transmission
 );
+    // ===== BUS =============
+
+    wire [DATABUS_ - 1 : 0] databus;
+    wire [ADDRBUS_ - 1 : 0] addrbus;
+
     // ===== PLLs ============
 
     wire clk_200;
