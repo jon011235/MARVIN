@@ -6,46 +6,60 @@
 */
 
 import pkg::*;
+import uart_pkg::*;
 
 module uart #(
-    parameter int unsigned F_CLK = 50000000,
+    parameter int unsigned CLK = 50000000,
     parameter int unsigned BAUDRATE = 2000000,
     parameter int unsigned BUFFER_ = 8,
     parameter int unsigned START_ = 1,
     parameter int unsigned DATA_ = 8,
     parameter int unsigned STOP_ = 1,
-    parameter int unsigned PARITY = "none" // "even", "odd", "mark"
+    parameter parity_t PARITY = NONE
 )(
     input clk, rst_,
     input [ADDRBUS_ - 1 : 0] addrbus,
-    inout [DATABUS_ - 1 : 0] databus,
+    inout [7 : 0] databus,                                      // Correct bus size later
     input rx,
     output tx
 );
-    localparam int unsigned BIT_ = CLKF / BAUDR;
+    localparam int unsigned BIT_ = CLK / BAUDRATE;
+    localparam int unsigned PARITY_ = PARITY == NONE ? 0 : 1;
+
+    localparam AE = START_ - 1;     // StArt bits End
+    localparam DS = AE + 1;         // Data bits Start
+    localparam DE = DS + DATA_ - 1; // Data bits End
+    localparam PL = DE + PARITY_;   // Parity bit Location
+    localparam OS = PL + 1;         // StOp bits Start
+    localparam OE = OS + STOP_ - 1; // StOp bits Snd
+    localparam ME = OE;             // Message End
+    localparam ML = ME + 1;         // Message Length
 
     wire ren, ten, rbre, rbwe, rbempty, tbre, tbwe, tbempty;
+    wire [ME : 0] rmsg, tmsg;
     wire [DATA_ - 1 : 0] rbdin, rbdout, tbdout;
-    wire [START_ + STOP_ + DATA_ - 1 : 0] rdata, tdata;
+    
     wire [$clog2(BIT_) - 1 : 0] rcycles, tcycles;
-    wire [$clog2(START_ + DATA_ + STOP_) - 1 : 0] rbits, tbits;
+    wire [$clog2(ML) - 1 : 0] rbits, tbits;
+
+    assign databus = rbdout;                                    // Remove later
 
     bramfifo #(
         .DATA_(DATA_),
-        .ADDR_(BUFR_)
+        .ADDR_(BUFFER_)
     ) rbuffer (
         .clk(clk),
         .rst_(rst_),
         .re(rbre),
         .we(rbwe),
         .empty(rbempty),
-        .din(rbdin),
+        .din(~rmsg[DE : DS]),
         .dout(rbdout)
     );
 
     bramfifo #(
         .DATA_(DATA_),
-        .ADDR_(BUFR_)
+        .ADDR_(BUFFER_)
     ) tbuffer (
         .clk(clk),
         .rst_(rst_),
@@ -65,51 +79,94 @@ module uart #(
             tcycles = '0;
             tbits = '0;
         end else begin
-            // ===== RX =====
+            // ===== RX ===========================================================================
 
-            if (!ren && !rx) begin
+            if (!ren && !rx) begin // Reception initialization
                 ren = 1;
             end
             
             if (ren) begin
-                if (rcycles < BIT_ - 1) begin
+                if (rcycles < BIT_ - 1) begin // Clock counter
                     rcycles++;
                 end else begin
                     rcycles = '0;
 
-                    if (rbits < START_ + DATA_ + STOP_ - 1) begin
+                    if (rbits < ME) begin // Bit counter
                         rbits++;
                     end else begin
                         ren = 0;
                         rbits = '0;
 
-                        // Write to buffer and test parity
+                        // Check start & stop bits
+                        if (rmsg[AE : 0] == '0 && rmsg[OE : OS] == '1) begin
+                            // Check parity
+                            case (PARITY)
+                                EVEN:
+                                    if (~^rmsg[DE : DS]) begin
+                                        rbwe = 1;
+                                    end
+                                ODD:
+                                    if (^rmsg[DE : DS]) begin
+                                        rbwe = 1;
+                                    end
+                                MARK:
+                                    if (rmsg[PL] == 1) begin
+                                        rbwe = 1;
+                                    end
+                                SPACE:
+                                    if (rmsg[PL] == 0) begin
+                                        rbwe = 1;
+                                    end
+                                NONE:
+                                    rbwe = 1; // Do not check parity 
+                            endcase
+                        end
                     end
                 end
-                
-                rdata[rbits] = rx;
+
+                if (rcycles == BIT_ / 2) begin // Read at midpoint of bit
+                    rmsg[rbits] = rx;
+                end
             end
 
-            // ===== TX =====
+            // ===== TX ===========================================================================
 
             tx = 1;
+            tbre = 0;
             
-            if (!ten && !tbempty) begin
+            if (!ten && !tbempty) begin // Transmission initialization
                 ten = 1;
                 tbre = 1;
-                tdata[START_ - 1 : 0] = '0;
-                tdata[START_ + DATA_ - 1 : START_] = ~tbdata;
+                // Startbits
+                tmsg[AE : 0] = '0;
+                // Databits
+                tmsg[DE : DS] = ~tbdout;
 
-                // Add parity bit
+                // Parity bit
+                case (PARITY)
+                    EVEN:
+                        tmsg[PL] = ~^tmsg[DE : DS];
+                    ODD:
+                        tmsg[PL] = ^tmsg[DE : DS];
+                    MARK:
+                        tmsg[PL] = 1;
+                    SPACE:
+                        tmsg[PL] = 0;
+                    NONE:;
+                        // Do not add parity
+                endcase
+
+                // Stopbits
+                tmsg[OE : OS] = '1;
             end
         
-            if (ten) begin
-                if (tcycles < BIT_ - 1) begin
+            if (ten) begin // Transmission
+                if (tcycles < BIT_ - 1) begin // Clock counter
                     tcycles++;
                 end else begin
                     tcycles = '0;
 
-                    if (tbits < START_ + DATA_ + STOP_ - 1) begin
+                    if (tbits < ME) begin // Bit counter
                         tbits++;
                     end else begin
                         ten = '0;
@@ -117,7 +174,7 @@ module uart #(
                     end
                 end
                 
-                tx = tdata[tbits];
+                tx = tmsg[tbits];
             end
         end
     end

@@ -6,6 +6,7 @@
 */
 
 import pkg::*;
+import uart_pkg::*;
 
 module marvin (
     // ===== General ========
@@ -49,9 +50,12 @@ module marvin (
     input uart_rx,                  // UART reception
     output uart_tx                  // UART transmission
 );
-    uart uuv (
+    uart #(
+        .PARITY(NONE)
+    ) uuv (
         .clk(clk1_50),
         .rst_(rst_),
+        .addrbus('0),
         .databus(led[7:0]),
         .rx(uart_rx),
         .tx(uart_tx)

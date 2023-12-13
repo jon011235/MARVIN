@@ -616,6 +616,7 @@ set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to vga_color.red[1]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to vga_color.red[0]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to vga_hs
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to vga_vs
+set_global_assignment -name SYSTEMVERILOG_FILE ../src/com/uart_pkg.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ../src/com/uart.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ../src/com/vga/vga.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ../src/utils/ram/bramfifo.sv
