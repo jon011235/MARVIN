@@ -8,12 +8,13 @@
 import pkg::*;
 
 module uart #(
-    parameter int unsigned CLKF = 50000000,
-    parameter int unsigned BAUDR = 2000000,
-    parameter int unsigned BUFR_ = 8,
+    parameter int unsigned F_CLK = 50000000,
+    parameter int unsigned BAUDRATE = 2000000,
+    parameter int unsigned BUFFER_ = 8,
     parameter int unsigned START_ = 1,
     parameter int unsigned DATA_ = 8,
-    parameter int unsigned STOP_ = 1
+    parameter int unsigned STOP_ = 1,
+    parameter int unsigned PARITY = "none" // "even", "odd", "mark"
 )(
     input clk, rst_,
     input [ADDRBUS_ - 1 : 0] addrbus,
@@ -24,7 +25,8 @@ module uart #(
     localparam int unsigned BIT_ = CLKF / BAUDR;
 
     wire ren, ten, rbre, rbwe, rbempty, tbre, tbwe, tbempty;
-    wire [DATA_ - 1 : 0] rdata, tdata, rdtmp;
+    wire [DATA_ - 1 : 0] rbdin, rbdout, tbdout;
+    wire [START_ + STOP_ + DATA_ - 1 : 0] rdata, tdata;
     wire [$clog2(BIT_) - 1 : 0] rcycles, tcycles;
     wire [$clog2(START_ + DATA_ + STOP_) - 1 : 0] rbits, tbits;
 
@@ -37,8 +39,8 @@ module uart #(
         .re(rbre),
         .we(rbwe),
         .empty(rbempty),
-        .din(rdata),
-        .dout(rbtmp)
+        .din(rbdin),
+        .dout(rbdout)
     );
 
     bramfifo #(
@@ -51,7 +53,7 @@ module uart #(
         .we(tbwe),
         .empty(tbempty),
         .din(databus),
-        .dout(tdata)
+        .dout(tbdout)
     );
 
     always @(posedge clk) begin
@@ -59,6 +61,7 @@ module uart #(
             ren = 0;
             rcycles = '0;
             rbits = '0;
+            ten = 0;
             tcycles = '0;
             tbits = '0;
         end else begin
@@ -79,16 +82,27 @@ module uart #(
                     end else begin
                         ren = 0;
                         rbits = '0;
+
+                        // Write to buffer and test parity
                     end
                 end
-
-                if (START_ <= rbits && rbits < START_ + DATA_ && rcycles = BIT_ / 2) begin
-                    rdata[rbits - START_] = !rx;
-                end
+                
+                rdata[rbits] = rx;
             end
 
             // ===== TX =====
 
+            tx = 1;
+            
+            if (!ten && !tbempty) begin
+                ten = 1;
+                tbre = 1;
+                tdata[START_ - 1 : 0] = '0;
+                tdata[START_ + DATA_ - 1 : START_] = ~tbdata;
+
+                // Add parity bit
+            end
+        
             if (ten) begin
                 if (tcycles < BIT_ - 1) begin
                     tcycles++;
@@ -102,16 +116,8 @@ module uart #(
                         tbits = '0;
                     end
                 end
-
-                if (tbits < START_) begin
-                    tx = '0;
-                end else if (tbits < START_ + DATA_) begin
-                    tx = tdata[tbits - START_];
-                end else begin
-                    tx = '1;
-                end
-            end else begin
-                tx = '1;
+                
+                tx = tdata[tbits];
             end
         end
     end
