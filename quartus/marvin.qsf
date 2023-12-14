@@ -39,7 +39,7 @@
 
 set_global_assignment -name FAMILY "MAX 10"
 set_global_assignment -name DEVICE 10M50DAF484C7G
-set_global_assignment -name TOP_LEVEL_ENTITY marvin
+set_global_assignment -name TOP_LEVEL_ENTITY de_10_lite_top
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 15.1.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "17:45:13 JUNE 17,2016"
 set_global_assignment -name LAST_QUARTUS_VERSION "22.1std.2 Lite Edition"
@@ -57,9 +57,6 @@ set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST OFF -section_id eda_
 set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST OFF -section_id eda_board_design_symbol
 set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST OFF -section_id eda_board_design_signal_integrity
 set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST OFF -section_id eda_board_design_boundary_scan
-set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
-set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
-set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_location_assignment PIN_N5 -to clk_10
 set_location_assignment PIN_P11 -to clk1_50
 set_location_assignment PIN_N14 -to clk2_50
@@ -184,10 +181,10 @@ set_location_assignment PIN_AA19 -to ardu_gpio[11]
 set_location_assignment PIN_Y19 -to ardu_gpio[12]
 set_location_assignment PIN_AB20 -to ardu_gpio[13]
 set_location_assignment PIN_AB21 -to ardu_gpio[14]
-set_location_assignment PIN_AA20 -to ardu_gpio[15] -disable
+set_location_assignment PIN_AA20 -to ardu_gpio[15]
 set_location_assignment PIN_F16 -to ardu_rst_
 set_location_assignment PIN_AA1 -to vga_color.red[0]
-set_location_assignment PIN_V1 -to vga_color.red[1] -disable
+set_location_assignment PIN_V1 -to vga_color.red[1]
 set_location_assignment PIN_Y2 -to vga_color.red[2]
 set_location_assignment PIN_Y1 -to vga_color.red[3]
 set_location_assignment PIN_W1 -to vga_color.green[0]
@@ -245,6 +242,10 @@ set_location_assignment PIN_AB16 -to gsensor_cs_
 set_location_assignment PIN_AB15 -to gsensor_sclk
 set_location_assignment PIN_Y14 -to gsensor_int[1]
 set_location_assignment PIN_Y13 -to gsensor_int[2]
+
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to clk_10
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to clk1_50
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to clk2_50
@@ -430,15 +431,6 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gsensor_cs_
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gsensor_sclk
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gsensor_int[1]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gsensor_int[2]
-
-set_global_assignment -name SYSTEMVERILOG_FILE ../src/com/vga/vga.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ../src/utils/clksplit.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ../src/utils/ckegen.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ../src/utils/pwmgen.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ../src/utils/counter.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ../src/pkg.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ../src/sysbus.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ../src/marvin.sv
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ardu_gpio[15]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ardu_gpio[14]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ardu_gpio[13]
@@ -476,7 +468,7 @@ set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_bank[1]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_bank[0]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_cas_
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_cke
-set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_clk
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to dram_clk
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_cs_
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_dq[15]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram_dq[14]
@@ -624,5 +616,13 @@ set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to vga_color.red[1]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to vga_color.red[0]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to vga_hs
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to vga_vs
-set_global_assignment -name QIP_FILE ../qsys/pll.qip
+set_global_assignment -name SYSTEMVERILOG_FILE ../src/com/vga/vga.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../src/utils/clksplit.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../src/utils/ckegen.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../src/utils/pwmgen.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../src/utils/counter.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../src/pkg.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../src/marvin.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../src/de_10_lite_top.sv
+set_global_assignment -name QIP_FILE ../qsys/pll/pll.qip
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

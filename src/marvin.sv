@@ -1,95 +1,45 @@
 /*
     Project:    MARVIN
     Sector:     TOP
-    Summary:    Toplevel design file, dedicated to pll instantiations and io-formatting
-    Device:     terasIC® DE10-Lite Development Board with Altera® MAX 10 10M50DAF484C7G FPGA
+    Summary:    System-bus file, dedicated to intermodular communication
 */
 
 import pkg::*;
 
-module marvin(
-    // ===== CLOCKS ======================================================
-    input clk_10,                   // 10MHz clock (for ADCs)   3.3V LVTTL
+module marvin (
+    input clk_10, clk1_50, clk2_50, // Clocks
 
-    input clk1_50,                  // 50MHz primary clock      3.3V LVTTL
+    input rst_,                     // Reset
 
-    input clk2_50,                  // 50MHz secondary clock    3.3V LVTTL
+    input btn_,                     // Push-button
 
-    // ===== BASIC IN ====================================================
-    input [1:0] key_,               // Push buttons             3.3V Schmitt
+    input [9:0] sw,                 // Toggle switches
 
-    input [9:0] sw,                 // Toggle switches          3.3V LVTTL
+    output [9:0] led,               // Leds
 
-    // ===== BASIC OUT ===================================================
-    output [9:0] ledr,              // Red leds                 3.3V LVTTL
+    output pkg::seg7p_t [5:0] hex_, // 8-element hex displays
 
-    output pkg::seg7p_t [5:0] hex_, // 8-element hex displays   3.3V LVTTL
+    inout [35:0] gpio,              // GPIO pins
 
-    // ===== BASIC IO ====================================================
-    inout [35:0] gpio,              // Expansion header         3.3V LVTTL
-
-    // ===== ARDUINO =====================================================
-    inout [15:0] ardu_gpio,         // Arduino connector        3.3V LVTTL
-    inout ardu_rst_,                // Arduino reset            3.3V Schmitt
+    inout [15:0] ardu_gpio,         // Arduino connector
 
     // ===== VGA =========================================================
-    output pkg::color_t vga_color,    // VGA color output       3.3V LVTTL
-    output vga_hs,                  // VGA horizontal sync      3.3V LVTTL
-    output vga_vs,                  // VGA vertical sync        3.3V LVTTL
+    output pkg::color_t vga_color,  // VGA color output
+    output vga_hs,                  // VGA horizontal sync
+    output vga_vs,                  // VGA vertical sync
 
     // ===== SDRAM =======================================================
-    output [12:0] dram_addr,        // SDRAM address            3.3V LVTTL
-    inout [15:0] dram_dq,           // SDRAM data bus           3.3V LVTTL
-    output [1:0] dram_bank,         // SDRAM bank address       3.3V LVTTL
-    output [1:0] dram_qdm,          // SDRAM bit mask           3.3V LVTTL
-    output dram_ras_,               // SDRAM row address strobe 3.3V LVTTL
-    output dram_cas_,               // SDRAM col address strobe 3.3V LVTTL
-    output dram_cke,                // SDRAM clock enable       3.3V LVTTL
-    output dram_clk,                // SDRAM clock              3.3V LVTTL
-    output dram_re,                 // SDRAM read enable        3.3V LVTTL
-    output dram_cs_,                // SDRAM chip select        3.3V LVTTL
-
-    // ===== GSENSOR =====================================================
-    inout gsensor_sdi,              // I2C D or SPI I 4 / IO 3  3.3V LVTTL
-    inout gsensor_sdo,              // SPI O 4 / Alt I2C Addr   3.3V LVTTL
-    output gsensor_cs_,             // I2C / SPI Mode           3.3V LVTTL
-    output gsensor_sclk,            // I2C / SPI serial clock   3.3V LVTTL
-    input [2:1] gsensor_int         // GSensor interrupt pins   3.3V LVTTL
+    output [12:0] dram_addr,        // SDRAM address
+    inout [15:0] dram_dq,           // SDRAM data bus
+    output [1:0] dram_bank,         // SDRAM bank address
+    output [1:0] dram_qdm,          // SDRAM bit mask
+    output dram_ras_,               // SDRAM row address strobe
+    output dram_cas_,               // SDRAM col address strobe
+    output dram_cke,                // SDRAM clock enable
+    output dram_clk,                // SDRAM clock
+    output dram_re,                 // SDRAM read enable
+    output dram_cs_                 // SDRAM chip select
 );
-    sysbus bus (
-        .clk_10(clk_10),
-        .clk1_50(clk1_50),
-        .clk2_50(clk2_50),
-        .rst_(key_[0] && ardu_rst_),
-        .btn_(key_[1]),
-        .sw(sw),
-        .led(ledr),
-        .hex_(hex_),
-        .gpio(gpio),
-        .ardu_gpio(ardu_gpio),
-
-        .vga_color(vga_color),
-        .vga_hs(vga_hs),
-        .vga_vs(vga_vs),
-
-        .dram_addr(dram_addr),
-        .dram_dq(dram_dq),
-        .dram_bank(dram_bank),
-        .dram_qdm(dram_qdm),
-        .dram_ras_(dram_ras_),
-        .dram_cas_(dram_cas_),
-        .dram_cke(dram_cke),
-        .dram_clk(clk_200),
-        .dram_re(dram_re),
-        .dram_cs_(dram_cs_),
-
-        .gsensor_sdi(gsensor_sdi),
-        .gsensor_sdo(gsensor_sdo),
-        .gsensor_cs_(gsensor_cs_),
-        .gsensor_sclk(gsensor_sclk),
-        .gsensor_int(gsensor_int)
-    );
-
     // ===== PLL =====
 
     wire clk_200;
@@ -101,7 +51,23 @@ module marvin(
 
     assign dram_clk = clk_200;
 
-    // ===== Assignments =====
+    // ===== BASIC ============
+    assign led = '0;
+    assign hex_ = '1;
+    assign gpio = 'z;
+    assign ardu_gpio = 'z;
+    assign vga_color = '0;
+    assign vga_hs = 0;
+    assign vga_vs = 0;
 
-    assign ardu_rst_ = 'z;
+    // ===== SDRAM ============
+    assign dram_addr = '0;
+    assign dram_dq = 'z;
+    assign dram_bank = '0;
+    assign dram_qdm = '0;
+    assign dram_cas_ = 1;
+    assign dram_ras_ = 1;
+    assign dram_cke = 0;
+    assign dram_re = 0;
+    assign dram_cs_ = 1;
 endmodule
